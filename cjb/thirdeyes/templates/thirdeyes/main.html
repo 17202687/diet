@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+	content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="../../static/CSS/base.css">
+	<title>메인 화면</title>
+	<link rel="stylesheet" href="../../static/CSS/gauge.css">
+</head>
+<body>
+	<table border="1">
+		<tr align="center" style= "height: 40%;">
+			<td colspan="2">
+				<div class="circle_progress"> 
+  					<span class="left"> 
+    				<span class="bar"></span> 
+  					</span> 
+  					<span class="right"> 
+    				<span class="bar"></span> 
+  					</span>
+  					<div class="value"></div>
+				</div>
+				<input id="control" type="range" value="60" />
+				<script src="../../static/javascript/gauge.js"></script>
+			</td>
+		</tr>
+		<tr align="center" style= "height: 20%;">
+			<td style ="cursor: pointer;" onclick="location.href='morning/'">아침</td>
+			<td style ="cursor: pointer;" onclick="location.href='lunch/'">점심</td>
+		</tr>
+		<tr align="center" style= "height: 20%;">
+			<td style ="cursor: pointer;" onclick="location.href='dinner/'">저녁</td>
+			<td style ="cursor: pointer;" onclick="location.href='snack/'">간식</td>
+		</tr>
+		<tr align="center" style= "height: 10%;">
+			<td style ="cursor: pointer;" onclick="location.href='diary/'" colspan="2">다이어리</td>
+		</tr>
+		<tr align="center" style= "height: 10%;">
+			<td colspan="2" style ="cursor: pointer;" onclick="location.href='set/'">설정</td>
+		</tr>
+	</table>
+</body>
+</html>

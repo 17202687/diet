@@ -1,0 +1,23 @@
+
+<div class="container">
+    <form method="POST">
+      <fieldset>
+        <legend>Form</legend>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </fieldset>
+    </form>
+</div>
+<!--
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="text">
+        <button type="submit" class="btn btn-primary">POST</button>
+    </form>
+
+    <h2>{{ post }}</h2>
+
+{% endblock %}-->

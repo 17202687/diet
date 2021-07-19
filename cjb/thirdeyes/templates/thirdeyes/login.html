@@ -8,29 +8,42 @@
 	<title>login</title>
 </head>
 <body>
-<table border="1">
-	<tr align="center" style="height: 30%;">
-		<td>
-			<h3>LOGIN</h3>
-		</td>
-	</tr>
-	<tr align="left" style="height: 30%;">
-		<td>
-			사용자 ID : <input type="text" size="14" value="">
-		</td>
-	</tr>
-	<tr align="left" style="height: 30%;">
-		<td>
-			비밀번호  : <input id="pass" type="password" size="14" value="">
-			<button onclick="location.href='main/'">확인</button>
-		</td>
-	</tr>
-	<tr align="center" style="height: 10%;">
-		<td>
-			<button size="15" onclick="location.href='signup/'">회원가입</button>
-			<button size="15" onclick="location.href='main/'">아이디/비밀번호찾기</button>
-		</td>
-	</tr>
-</table>
+    <div class="container"> 
+		<form id="form" method="post">
+			{% csrf_token %}
+			<table border="1" style="width: 300px; height: 500px;">
+				<tr align="center" style="height:30%;">
+					<td>
+						<h3>LOGIN</h3>
+					</td>
+				</tr>
+				<tr align="left" style="height:30%;">
+					<td>
+						사용자 ID : <input name="id" type="text" size="14" value="">
+					</td>
+				</tr>
+				<tr align="left" style="height:30%;">
+					<td>
+						비밀번호  : <input name="pw" type="password" size="14" value="">
+						<button type="submit" onclick="location.href='main/'">확인</button>
+						{% if messages %}
+							<ul class="messages">
+								{% for message in messages %}
+									<span{% if messages.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+								{% endfor %}
+							</ul>
+						{% endif %}
+						
+					</td>
+				</tr>
+				<tr align="center" style="height:10%;">
+					<td>
+						<button type="button" size="15" onclick="location.href='signup/'">회원가입</button>
+						<button type="button" size="15" onclick="location.href='main/'">아이디/비밀번호찾기</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>

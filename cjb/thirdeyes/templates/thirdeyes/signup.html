@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,48 +9,68 @@
 	<title>회원가입</title>
 </head>
 <body>
-<table border="1">
-	<tr align="center">
-		<td>
-			<h3>회원가입</h3>
-		</td>
-	</tr>
-	<tr align="left">
-		<td>
-			ID : <input type="text" size="15" value="">
-			<button onclick="location.href='main/'">확인</button>
-		</td>
-	</tr>
-	<tr align="left">
-		<td>
-			PW 확인 : <input id="pass" type="password" size="15" value="">
-		</td>
-	</tr>
-	<tr align="left">
-		<td>
-			PW 재확인 : <input id="pass" type="password" size="15" value="">
-		</td>
-	</tr>
-	<tr align="left">
-		<td>
-			이름 : <input id="name" type="text" size="15" value="">
-		</td>
-	</tr>
-	<tr align="left">
-		<td>
-			전화번호 : <input id="number" type="text" size="15" value="">
-		</td>
-	</tr>
-	<tr align="left">
-		<td>
-			이메일 : <input id="email" type="text" size="15" value="">
-		</td>
-	</tr>
-	<tr align="center">
-		<td>
-			<button size="15" onclick="location.href='/'">확인</button>
-		</td>
-	</tr>
-</table>
+  <script>
+	  function done(){
+		  var form=document.getElementById("form");
+		  var pw=form.pw.value;
+		  var pwcheck=form.pwcheck.value;
+
+		  if(pw != pwcheck){
+			  alert("비밀번호가 다릅니다.");
+		  }
+		  else{
+			  form.submit();
+        alert('회원가입 성공!')
+		  }
+	  }
+  </script>
+  <table border="1" style="width: 300px; height: 500px;">
+    <tr align="center">
+      <td>
+        <h3>회원가입</h3>
+      </td>
+    </tr>
+    <div class="container"> 
+      <form id="form" method="post">
+        {% csrf_token %}
+        <tr align="left"> 
+          <td>
+            ID : <input type="text" size="15" name="id" value="">
+            <button type="button" onclick="location.href='/'">확인</button>
+          </td>
+        </tr>
+        <tr align="left">  
+          <td>
+            PW 확인 : <input id="pw" type="password" size="15" name="pw" value="">
+          </td>
+        </tr>
+        <tr align="left">
+          <td>
+            PW 재확인 : <input id="pwcheck" type="password" size="15" name="pwcheck" value="">
+          </td>
+        </tr>
+        <tr align="left"> 
+          <td>
+            이름 : <input id="nm" type="text" size="15" name="nm" value="">
+          </td>
+        </tr>
+        <tr align="left">
+          <td for="tel">
+            전화번호 : <input id="tel" type="text" size="15" name="tel" value="">
+          </td>
+        </tr>
+        <tr align="left"> 
+          <td>
+            이메일 : <input id="email" type="text" size="15" name="email" value="">
+          </td>
+        </tr>
+        <tr align="center">
+          <td>
+            <button onclick="done()" role="button" type="button" size="15"  class="btn btn-primary">확인</button>
+          </td>
+        </tr>
+      </form>
+    </div>
+  </table>
 </body>
 </html>

@@ -6,32 +6,43 @@
 	content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" href="../../static/CSS/base.css">
 	<title>점심</title>
+	<script src="https://kit.fontawesome.com/8118e973b8.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <table border="1">
-	<tr align="center">
+	<tr align="center" style="height: 10%;">
 		<td colspan="2">
-			<h3>점심</h3>
+		<div style="text-align: : center;">
+			<button type="button" onclick="history.back(-1);" style="float: left;"><i class="fas fa-angle-left"></i>
+			</button> 	
+			점심
+			<button type="button" onclick="history.back(-1);" style="float: right;">
+				<i class="fas fa-search"></i>
+			</button>
+			<button type="button" onclick="history.back(-1);" style="float: right;">
+				<i class="fas fa-camera"></i>
+			</button>
+		</div>
 		</td>
 	</tr>
-	<tr align="center">
+	<tr align="center" style="height: 40%;">
 		<td colspan="2" style ="cursor: pointer;" onclick="location.href='set/'">
 			<h3>사진</h3>
 		</td>
 	</tr>
-	<tr align="center">
+	<tr align="center" style="height: 20%;">
 		<td colspan="2">
 			<h3>음식/칼로리</h3>
 		</td>
 	</tr>
-	<tr align="center">
+	<tr align="center" style="height: 20%;">
 		<td colspan="2" style ="cursor: pointer;" onclick="location.href='set/'">
-			<h3>음식 추가하기</h3>
+			<h3>메모</h3>
 		</td>
 	</tr>
-	<tr align="center">
-		<td style ="cursor: pointer;" onclick="location.href='/main/diary/'">다이어리</td>
-		<td style ="cursor: pointer;" onclick="location.href='/main/'">나가기</td>
+	<tr align="center" style="height: 10%;">
+		<td style ="cursor: pointer;" onclick="location.href='/main/'">저장</td>
+		<td style ="cursor: pointer;" onclick="location.href='/main/'">수정</td>
 	</tr>
 </table>
 </body>

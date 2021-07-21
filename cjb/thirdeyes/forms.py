@@ -17,3 +17,8 @@ class LoginForm(forms.ModelForm):
   class Meta:
     model = LoginTb
     fields = ["user_id","pw"]
+
+class UserInfoForm(forms.ModelForm):
+  class Meta:
+    model = UserInfo
+    fields = ["user_id", "gender", "age", "height", "weight"]

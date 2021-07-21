@@ -31,3 +31,15 @@ class Food(models.Model):
     class Meta:
         managed = False
         db_table = 'food'
+
+        
+class UserInfo(models.Model):
+    user_id = models.CharField(primary_key=True, max_length=20)
+    gender = models.IntegerField(blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
+    height = models.IntegerField(blank=True, null=True)
+    weight = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'user_info'

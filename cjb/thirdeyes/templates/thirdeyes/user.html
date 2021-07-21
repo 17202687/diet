@@ -8,27 +8,32 @@
 	<title>사용자 정보 설정</title>
 </head>
 <body>
-	<table border="1">
-		<tr align="center">
-			<h3><td colspan="2">사용자 정보 입력</td></h3>
-		</tr>
-		<tr align="center">
-			<td colspan="2">성별 <input type="radio" name="gender" value="male">남성 
-			<input type="radio" name="gender" value="female">여성</td>
-		</tr>
-		<tr align="center">
-			<td colspan="2">나이 <input type="text" size="4">세</td>
-		</tr>
-		<tr align="center">
-			<td colspan="2">신장 <input type="text" size="4">cm</td>
-		</tr>
-		<tr align="center">
-			<td colspan="2">몸무게 <input type="text" size="4">kg</td>
-		</tr>
-		<tr align="center">
-			<td style ="cursor: pointer;" onclick="location.href='/main/set/'">확인</td>
-			<td style ="cursor: pointer;" onclick="location.href='/main/set/'">나가기</td>
-		</tr>
-	</table>
+    <div class="container"> 
+    	<form id="form" method="post">
+        	{% csrf_token %}
+			<table border="1">
+				<tr align="center">
+					<h3><td colspan="2">사용자 정보 입력</td></h3>
+				</tr>
+				<tr align="center">
+					<td colspan="2">성별 <input type="radio" name="gender" value="1">남성 
+					<input type="radio" name="gender" value="2">여성</td>
+				</tr>
+				<tr align="center">
+					<td colspan="2">나이 <input name="age" type="text" size="4">세</td>
+				</tr>
+				<tr align="center">
+					<td colspan="2">신장 <input name="height" type="text" size="4">cm</td>
+				</tr>
+				<tr align="center">
+					<td colspan="2">몸무게 <input name="weight" type="text" size="4">kg</td>
+				</tr>
+				<tr align="center">
+					<td style ="cursor: pointer;" onclick="location.href='/main/set/'">확인</td>
+					<td style ="cursor: pointer;" onclick="location.href='/main/set/'">나가기</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>

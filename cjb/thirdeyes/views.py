@@ -17,6 +17,8 @@ def login(request):
             getUser=UserTb.objects.get(id=inputId)
             if(getUser.pw == inputPw):
                 #로그인 성공
+                request.session['id']=data['id']
+                print(request.session['id'])
                 return redirect('main/')
             else:
                 #비밀번호가 다름
@@ -56,7 +58,29 @@ def signup(request):
     return render(request, 'thirdeyes/signup.html', {'form': form})
 
 def user(request):
-    return render(request, 'thirdeyes/user.html')
+    if request.method=="POST":
+        form = UserInfoForm(request.POST)
+        data=request.POST
+        requestId=request.session['id']
+        if UserInfo.objects.filter(user_id=requestId).exists():
+            getUser=UserInfo.objects.get(user_id=requestId)
+            getUser.gender=data['gender']
+            getUser.age=data['age']
+            getUser.height=data['height']
+            getUser.weight=data['weight']
+            getUser.save()
+
+        else:
+            UserInfo.objects.create(
+                user_id=requestId,
+                gender=data['gender'],
+                age=data['age'],
+                height=data['height'],
+                weight=data['weight']
+            )
+    else:
+        form=LoginForm()
+    return render(request, 'thirdeyes/user.html',{'forms':form})
 
 def lunch(request):
     return render(request, 'thirdeyes/lunch.html')

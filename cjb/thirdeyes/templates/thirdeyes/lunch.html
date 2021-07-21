@@ -9,20 +9,19 @@
 	<script src="https://kit.fontawesome.com/8118e973b8.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<table border="1">
-	<tr align="center" style="height: 10%;">
+<div>
+<table border="1" style="height: 600px;">
+	<tr align="center" style="height: 15%;">
 		<td colspan="2">
-		<div style="text-align: : center;">
 			<button type="button" onclick="history.back(-1);" style="float: left;"><i class="fas fa-angle-left"></i>
 			</button> 	
 			점심
-			<button type="button" onclick="history.back(-1);" style="float: right;">
+			<button type="button" onclick="location.href='search'" style="float: right;">
 				<i class="fas fa-search"></i>
 			</button>
 			<button type="button" onclick="history.back(-1);" style="float: right;">
 				<i class="fas fa-camera"></i>
 			</button>
-		</div>
 		</td>
 	</tr>
 	<tr align="center" style="height: 40%;">
@@ -30,20 +29,16 @@
 			<h3>사진</h3>
 		</td>
 	</tr>
-	<tr align="center" style="height: 20%;">
+	<tr align="center" style="height: 30%;">
 		<td colspan="2">
 			<h3>음식/칼로리</h3>
 		</td>
 	</tr>
-	<tr align="center" style="height: 20%;">
-		<td colspan="2" style ="cursor: pointer;" onclick="location.href='set/'">
-			<h3>메모</h3>
-		</td>
-	</tr>
-	<tr align="center" style="height: 10%;">
-		<td style ="cursor: pointer;" onclick="location.href='/main/'">저장</td>
-		<td style ="cursor: pointer;" onclick="location.href='/main/'">수정</td>
+	<tr align="center" style="height: 15%;">
+		<td><button onclick="location.href='/main/'">저장</button></td>
+		<td><button onclick="location.href='/main/'">수정</button></td>
 	</tr>
 </table>
+</div>
 </body>
 </html>

@@ -108,3 +108,6 @@ def lalarm(request):
 
 def dalarm(request):
     return render(request, 'thirdeyes/dalarm.html')
+
+def search(request):
+    return render(request, 'thirdeyes/search.html')

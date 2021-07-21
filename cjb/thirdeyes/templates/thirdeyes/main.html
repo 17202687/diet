@@ -9,8 +9,9 @@
 	<link rel="stylesheet" href="../../static/CSS/gauge.css">
 </head>
 <body>
-	<table border="1">
-		<tr align="center" style= "height: 40%;">
+	<div>
+	<table border="1" style="height: 500px;">
+		<tr align="center" style= "height: 30%;">
 			<td colspan="2">
 				<div class="circle_progress"> 
   					<span class="left"> 
@@ -25,13 +26,16 @@
 				<script src="../../static/javascript/gauge.js"></script>
 			</td>
 		</tr>
-		<tr align="center" style= "height: 20%;">
+		<tr align="center" style= "height: 15%;">
 			<td style ="cursor: pointer;" onclick="location.href='morning/'">아침</td>
 			<td style ="cursor: pointer;" onclick="location.href='lunch/'">점심</td>
 		</tr>
-		<tr align="center" style= "height: 20%;">
+		<tr align="center" style= "height: 15%;">
 			<td style ="cursor: pointer;" onclick="location.href='dinner/'">저녁</td>
 			<td style ="cursor: pointer;" onclick="location.href='snack/'">간식</td>
+		</tr>
+		<tr align="center" style= "height: 20%;">
+			<td style ="cursor: pointer;" onclick="location.href='dinner/'" colspan="2">메모</td>
 		</tr>
 		<tr align="center" style= "height: 10%;">
 			<td style ="cursor: pointer;" onclick="location.href='diary/'" colspan="2">다이어리</td>
@@ -40,5 +44,6 @@
 			<td colspan="2" style ="cursor: pointer;" onclick="location.href='set/'">설정</td>
 		</tr>
 	</table>
+	</div>
 </body>
 </html>

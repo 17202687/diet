@@ -1,0 +1,21 @@
+.searchBox 
+{
+  margin: 20px 0;
+}
+
+.listBox 
+{
+  max-width: 500px;
+}
+
+.listInner 
+{
+  background-color: #dedede;
+  margin: 10px 5px;
+  padding: 4px;
+}
+
+.country
+{
+  font-weight: bold;
+}

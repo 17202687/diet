@@ -18,4 +18,8 @@ urlpatterns = [
     path('main/set/alarm/malarm/', views.malarm, name='malarm'),
     path('main/set/alarm/lalarm/', views.lalarm, name='lalarm'),
     path('main/set/alarm/dalarm/', views.dalarm, name='dalarm'),
+    path('main/morning/search/', views.search, name='search'),
+    path('main/lunch/search/', views.search, name='search'),
+    path('main/dinner/search/', views.search, name='search'),
+    
 ]

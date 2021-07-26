@@ -1,4 +1,4 @@
-.searchBox 
+.container
 {
   margin: 20px 0;
 }
@@ -15,7 +15,7 @@
   padding: 4px;
 }
 
-.country
+.menu
 {
   font-weight: bold;
 }

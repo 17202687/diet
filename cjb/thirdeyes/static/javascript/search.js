@@ -5,10 +5,10 @@ function filter()
 
   for (let i = 0; i < listInner.length; i++) 
   {
-    city = listInner[i].getElementsByClassName("city");
-    country = listInner[i].getElementsByClassName("country");
-    if (city[0].innerHTML.toLowerCase().indexOf(search) != -1 ||
-        country[0].innerHTML.toLowerCase().indexOf(search) != -1
+    kcal = listInner[i].getElementsByClassName("kcal");
+    menu = listInner[i].getElementsByClassName("menu");
+    if (kcal[0].innerHTML.toLowerCase().indexOf(search) != -1 ||
+        menu[0].innerHTML.toLowerCase().indexOf(search) != -1
       )
     {
       listInner[i].style.display = "flex"

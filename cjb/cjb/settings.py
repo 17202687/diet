@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +27,11 @@ SECRET_KEY = 'django-insecure-rulpa^i431%snu!b1^5wt(&m=t3aa08(u(+wv(6^)v_b2y(lme
 DEBUG = True
 
 ALLOWED_HOSTS = ["58.141.234.93","192.168.0.1", "127.0.0.1", "localhost", "0.0.0.0", "192.168.0.17", "3.35.120.6", "ec2-3-35-120-6.ap-northeast-2.compute.amazonaws.com"]
+
+# 미디어 파일을 관리할 루트 media 디렉터리
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 각 media file에 대한 URL prefix
+MEDIA_URL = '/media/'
 
 
 # Application definition

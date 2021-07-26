@@ -32,14 +32,24 @@ class Food(models.Model):
         managed = False
         db_table = 'food'
 
-        
 class UserInfo(models.Model):
     user_id = models.CharField(primary_key=True, max_length=20)
     gender = models.IntegerField(blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
     weight = models.IntegerField(blank=True, null=True)
+    activity = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'user_info'
+
+class ImageTb(models.Model):
+    img_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    date_time = models.DateField()
+    img = models.ImageField(upload_to="images/")
+
+    class Meta:
+        managed = False
+        db_table = 'image_tb'

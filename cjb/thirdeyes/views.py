@@ -69,14 +69,15 @@ def user(request):
             getUser.height=data['height']
             getUser.weight=data['weight']
             getUser.save()
-
+            return redirect('/main/set/')
         else:
             UserInfo.objects.create(
                 user_id=requestId,
                 gender=data['gender'],
                 age=data['age'],
                 height=data['height'],
-                weight=data['weight']
+                weight=data['weight'],
+                activity=data['activity']
             )
     else:
         form=LoginForm()
@@ -111,3 +112,22 @@ def dalarm(request):
 
 def search(request):
     return render(request, 'thirdeyes/search.html')
+
+# Create your views here. 
+def home_view(request): 
+    context = {}
+    if request.method == "POST": 
+        form = ImageForm(request.POST, request.FILES) 
+        if form.is_valid(): 
+            name = form.cleaned_data.get("name") 
+            img = form.cleaned_data.get("image_field") 
+            obj = ImageTb.objects.create( 
+                                 title = name,  
+                                 img = img 
+                                 ) 
+            obj.save() 
+            print(obj)
+    else: 
+        form = ImageForm()
+        context['form'] = form
+        return render( request, "img.html", context) 

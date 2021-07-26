@@ -21,4 +21,8 @@ class LoginForm(forms.ModelForm):
 class UserInfoForm(forms.ModelForm):
   class Meta:
     model = UserInfo
-    fields = ["user_id", "gender", "age", "height", "weight"]
+    fields = ["user_id", "gender", "age", "height", "weight", "activity"]
+
+class ImageForm(forms.Form):
+  name=forms.CharField()
+  image_field=forms.ImageField()

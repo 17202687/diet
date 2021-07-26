@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.login, name='login'),
@@ -21,5 +23,6 @@ urlpatterns = [
     path('main/morning/search/', views.search, name='search'),
     path('main/lunch/search/', views.search, name='search'),
     path('main/dinner/search/', views.search, name='search'),
+    path('img', views.home_view, name='img'),
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

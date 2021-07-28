@@ -11,14 +11,14 @@
     <div class="container"> 
     	<form id="form" method="post">
         	{% csrf_token %}
-			<table border="1">
+			<table border="1" style="height: 600px;">
 				<tr align="center">
 					<h3><td colspan="2">사용자 정보 입력</td></h3>
 				</tr>
 				<tr align="center">
 					<td colspan="2">성별 
-						<input type="radio" name="gender" value="1">남성 
-						<input type="radio" name="gender" value="2">여성
+						<input id="age" type="radio" name="gender" value="1">남성 
+						<input id="age" type="radio" name="gender" value="2">여성
 					</td>
 				</tr>
 				<tr align="center">
@@ -29,6 +29,23 @@
 				</tr>
 				<tr align="center">
 					<td colspan="2">몸무게 <input name="weight" type="text" size="4">kg</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+					<p align="center">활동량<p>
+					
+					<input type="radio" name="activity" value="0.2">활동이 적거나 운동을 안하는 경우
+					<br> 
+					<input type="radio" name="activity" value="0.375">가벼운 활동 및 운동을 한 경우 (1~3일/주)
+					<br>
+					<input type="radio" name="activity" value="0.555">
+					보통의 활동 및 운동(3~5일/주)
+					<br> 
+					<input type="radio" name="activity" value="0.725">적극적인 활동 및 운동 (6~7일/주)	
+					<br>
+					<input type="radio" name="activity" value="0.9">
+					매우 적극적인 활동 및 운동 = 운동선수 
+					</td>
 				</tr>
 				<tr align="center">
 					<td><button type="submit" onclick="location.href='main/set/'">확인</button></td>

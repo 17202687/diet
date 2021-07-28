@@ -38,7 +38,7 @@ class UserInfo(models.Model):
     age = models.IntegerField(blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
     weight = models.IntegerField(blank=True, null=True)
-    activity = models.IntegerField(blank=True, null=True)
+    activity = models.DecimalField(max_digits=4, decimal_places=3, blank=True, null=True)
 
     class Meta:
         managed = False

@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from .models import *
 from .forms import *
 from django.contrib import messages
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -31,7 +32,13 @@ def login(request):
     return render(request, 'thirdeyes/login.html',{'forms':form})
 
 def main(request):
-    return render(request, 'thirdeyes/main.html')   
+    requestId=request.session['id']
+    if UserInfo.objects.filter(user_id=requestId).exists():
+        getUser=UserInfo.objects.get(user_id=requestId)
+        if getUser.gender==1:
+                value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
+        return render(request, 'thirdeyes/main.html',{'content':value})
+    return render(request, 'thirdeyes/main.html') 
 
 def set(request):
     return render(request, 'thirdeyes/set.html')
@@ -58,16 +65,36 @@ def signup(request):
     return render(request, 'thirdeyes/signup.html', {'form': form})
 
 def user(request):
+
+    
+    requestId=request.session['id']
+    if UserInfo.objects.filter(user_id=requestId).exists():
+        getUser=UserInfo.objects.get(user_id=requestId)
+        value={
+            'gender':getUser.gender,
+            'age':getUser.age,
+            'height':getUser.height,
+            'weight':getUser.weight,
+            'activity':getUser.activity
+        }
+    else:
+        value={
+            'gender':0,
+            'age':0,
+            'height':0,
+            'weight':0,
+            'activity':0
+        }
     if request.method=="POST":
         form = UserInfoForm(request.POST)
         data=request.POST
-        requestId=request.session['id']
         if UserInfo.objects.filter(user_id=requestId).exists():
             getUser=UserInfo.objects.get(user_id=requestId)
             getUser.gender=data['gender']
             getUser.age=data['age']
             getUser.height=data['height']
             getUser.weight=data['weight']
+            getUser.activity=data['activity']
             getUser.save()
             return redirect('/main/set/')
         else:

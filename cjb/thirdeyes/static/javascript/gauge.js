@@ -1,19 +1,16 @@
 var control = document.getElementById('control');
-var leftBar = document.querySelector('.left .bar');
-var rightBar = document.querySelector('.right .bar');
-var per = document.querySelector('.value');
+var bar = document.querySelector('.bar');
+var value = document.querySelector('.value');
 
-function progress(value) {
-  per.innerHTML=value +'%';
-  if (value <= 50) {
-    var degree = 18*value/5;
-    rightBar.style.transform = "rotate("+degree+"deg)";
-    leftBar.style.transform = "rotate(0deg)";
-  } else {
-    var degree = 18*(value-50)/5;
-    rightBar.style.transform = "rotate(180deg)";
-    leftBar.style.transform = "rotate("+degree+"deg)";
-  }
+var RADIUS = 54;
+var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+function progress(per) {
+  var progress = per / 100;
+  var dashoffset = CIRCUMFERENCE * (1 - progress);
+  
+  value.innerHTML=per +'%';
+  bar.style.strokeDashoffset = dashoffset;
 }
 
 control.addEventListener('input', function(event) {
@@ -23,4 +20,5 @@ control.addEventListener('change', function(event){
   progress(event.target.valueAsNumber);
 });
 
+bar.style.strokeDasharray = CIRCUMFERENCE;
 progress(60);

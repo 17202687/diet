@@ -13,16 +13,13 @@
 	<table border="1" style="height: 500px;">
 		<tr align="center" style= "height: 30%;">
 			<td colspan="2">
-				<div class="circle_progress"> 
-  					<span class="left"> 
-    				<span class="bar"></span> 
-  					</span> 
-  					<span class="right"> 
-    				<span class="bar"></span> 
-  					</span>
-  					<div class="value"></div>
-				</div>
-				<input id="control" type="range" value="60" />
+				<div class="circle_progress_wrap">
+  				<svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
+   				<circle class="frame" cx="60" cy="60" r="54" stroke-width="12" />
+    			<circle class="bar" cx="60" cy="60" r="54" stroke-width="12" />
+  				</svg>
+  				<input id="control" type="range" value="60" />
+  				<strong class="value"></strong>
 				<script src="../../static/javascript/gauge.js"></script>
 			</td>
 		</tr>

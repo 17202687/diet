@@ -1,63 +1,38 @@
-.circle_progress {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  margin-bottom: 20px;
+body {
+  background-color: #222;
 }
-.circle_progress:after {
+
+.circle_progress_wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.circle_progress {
+  transform: rotate(-90deg);
+}
+
+.frame, .bar {
+  fill: none;
+}
+
+.frame {
+  stroke: #e6e6e6;
+}
+
+.bar {
+  stroke: #03c75a;
+  stroke-linecap: round;
+}
+
+.value {
   position: absolute;
-  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 50%;
-  border: 16px solid #fff;
-  box-sizing: border-box;
-  content: "";
-}
-.circle_progress .left, .circle_progress .right {
-  position: absolute;
   top: 0;
-  width: 80px;
-  height: 160px;
-  overflow: hidden;
-  z-index: 10;
-}
-.circle_progress .left .bar, .circle_progress .right .bar {
-  position: absolute;
-  top: 0;
-  width: 80px;
-  height: 160px;
-  border: 16px solid #03c75a;
-  box-sizing: border-box;
-}
-.circle_progress .left {
-  left: 0;
-}
-.circle_progress .left .bar {
-  left: 80px;
-  border-top-right-radius: 160px;
-  border-bottom-right-radius: 160px;
-  border-left: 0;
-  transform-origin: center left;
-}
-.circle_progress .right {
-  right: 0;
-}
-.circle_progress .right .bar {
-  right: 80px;
-  border-top-left-radius: 160px;
-  border-bottom-left-radius: 160px;
-  border-right: 0;
-  transform-origin: center right;
-}
-.circle_progress .value {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  font-size: 16px;
-  color: #888;
-  line-height: 160px;
   text-align: center;
-  position: absolute;
+  color: #888;
+  font-size: 16px;
+  line-height: 120px;
 }

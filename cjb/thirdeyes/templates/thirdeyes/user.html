@@ -22,13 +22,13 @@
 					</td>
 				</tr>
 				<tr align="center">
-					<td colspan="2">나이 <input name="age" type="text" size="4">세</td>
+					<td colspan="2">나이 <input name="age" type="text" size="4" value="{{context.age}}">세</td>
 				</tr>
 				<tr align="center">
-					<td colspan="2">신장 <input name="height" type="text" size="4">cm</td>
+					<td colspan="2">신장 <input name="height" type="text" size="4" value="{{context.height}}">cm</td>
 				</tr>
 				<tr align="center">
-					<td colspan="2">몸무게 <input name="weight" type="text" size="4">kg</td>
+					<td colspan="2">몸무게 <input name="weight" type="text" size="4" value="{{context.weight}}">kg</td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -44,15 +44,45 @@
 					<input type="radio" name="activity" value="0.725">적극적인 활동 및 운동 (6~7일/주)	
 					<br>
 					<input type="radio" name="activity" value="0.9">
-					매우 적극적인 활동 및 운동 = 운동선수 
+					매우 적극적인 활동 및 운동 = 운동선수
 					</td>
 				</tr>
 				<tr align="center">
 					<td><button type="submit" onclick="location.href='main/set/'">확인</button></td>
-					<td><button type="button" onclick="location.href='main/set/'">나가기</button></td>
+					<td><button type="button" onclick="location.href='/main/set/'">나가기</button></td>
 				</tr>
 			</table>
 		</form>
 	</div>
+	<script>
+		var gen=document.getElementsByName("gender");
+		if("{{context.gender}}"=='1'){
+			gen[0].checked=true;
+		}
+		else if("{{context.gender}}"=='2'){
+			gen[1].checked=true;
+		}
+
+		var act=document.getElementsByName("activity");
+		switch("{{context.activity}}"){
+			case '0.200':
+				act[0].checked=true;
+				break;
+			case '0.375':
+				act[1].checked=true;
+				break;
+			case '0.555':
+				act[2].checked=true;
+				break;
+			case '0.725':
+				act[3].checked=true;
+				break;
+			case '0.900':
+				act[4].checked=true;
+				break;
+			default:
+				break;
+		}
+	</script>
 </body>
 </html>

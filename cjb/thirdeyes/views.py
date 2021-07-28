@@ -108,7 +108,7 @@ def user(request):
             )
     else:
         form=LoginForm()
-    return render(request, 'thirdeyes/user.html',{'forms':form})
+    return render(request, 'thirdeyes/user.html',{'forms':form, 'context':value})
 
 def lunch(request):
     return render(request, 'thirdeyes/lunch.html')

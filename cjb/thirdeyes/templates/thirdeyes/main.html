@@ -26,12 +26,24 @@
 
 				var RADIUS = 54;
 				var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+				
+				var cnt=0;
+				var eat_kcal=new Array();
+				var sum=0;
+				'{% for eat in eats %}'
+					cnt++;
+					eat_kcal[cnt]='{{eat.food_kcal}}'
+					if(eat_kcal!=undefined){
+						sum+=parseInt(eat_kcal[cnt])
+					}
+				'{% endfor %}'	
+				//document.write(sum);
 
-  				var progress = (1000+ 300 +270) / 2550;
+  				var progress = sum / "{{content}}"
   				var dashoffset = CIRCUMFERENCE * (1 - progress);
   
   				//value.innerHTML=per +'%';
-  				value.innerHTML= Math.round("{{content}}" - ) 
+  				value.innerHTML= Math.round("{{content}}" - sum) 
 
   				bar.style.strokeDashoffset = dashoffset;
 				bar.style.strokeDasharray = CIRCUMFERENCE;
@@ -53,6 +65,7 @@
 			'{% endfor %}'	
 			document.write(sum);
 		</script>
+
 		<tr align="center" style= "height: 15%;">
 			<td style ="cursor: pointer;" onclick="location.href='morning/'">아침</td>
 			<td style ="cursor: pointer;" onclick="location.href='lunch/'">점심</td>

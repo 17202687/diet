@@ -160,7 +160,7 @@ def msearch(request):
                 food_name=data['food_name'],
                 food_kcal=int(data['food_kcal'])
             )
-        return redirect('/main/')
+        return redirect('/main/morning/')
     return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 def lsearch(request):
@@ -184,8 +184,8 @@ def lsearch(request):
                 food_name=data['food_name'],
                 food_kcal=int(data['food_kcal'])
             )
-        return redirect('/main/')
-    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+        return redirect('/main/lunch/')
+    return render(request, 'thirdeyes/lsearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 def dsearch(request):
     requestId=request.session['id']
@@ -208,8 +208,8 @@ def dsearch(request):
                 food_name=data['food_name'],
                 food_kcal=int(data['food_kcal'])
             )
-        return redirect('/main/')
-    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+        return redirect('/main/dinner/')
+    return render(request, 'thirdeyes/dsearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 def ssearch(request):
     requestId=request.session['id']
@@ -232,7 +232,7 @@ def ssearch(request):
                 food_name=data['food_name'],
                 food_kcal=int(data['food_kcal'])
             )
-        return redirect('/main/')
-    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+        return redirect('/main/snack/')
+    return render(request, 'thirdeyes/ssearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 # Create your views here. 

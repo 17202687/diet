@@ -4,6 +4,7 @@ from .models import *
 from .forms import *
 from django.contrib import messages
 from django.http import HttpResponse
+from django.utils import timezone
 
 
 # Create your views here.
@@ -65,8 +66,6 @@ def signup(request):
     return render(request, 'thirdeyes/signup.html', {'form': form})
 
 def user(request):
-
-    
     requestId=request.session['id']
     if UserInfo.objects.filter(user_id=requestId).exists():
         getUser=UserInfo.objects.get(user_id=requestId)
@@ -106,6 +105,7 @@ def user(request):
                 weight=data['weight'],
                 activity=data['activity']
             )
+            return redirect('/main/set/')
     else:
         form=LoginForm()
     return render(request, 'thirdeyes/user.html',{'forms':form, 'context':value})
@@ -138,23 +138,18 @@ def dalarm(request):
     return render(request, 'thirdeyes/dalarm.html')
 
 def search(request):
-    return render(request, 'thirdeyes/search.html')
+    getFood=Food.objects.all()
+    if request.method=="POST":
+        data=request.POST
+        print(data['id'])
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=data['meal_type'],
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal'])
+        )
+        return redirect('/')
+    return render(request, 'thirdeyes/search.html', {'foods':getFood, 'id':request.session['id']})
 
 # Create your views here. 
-def home_view(request): 
-    context = {}
-    if request.method == "POST": 
-        form = ImageForm(request.POST, request.FILES) 
-        if form.is_valid(): 
-            name = form.cleaned_data.get("name") 
-            img = form.cleaned_data.get("image_field") 
-            obj = ImageTb.objects.create( 
-                                 title = name,  
-                                 img = img 
-                                 ) 
-            obj.save() 
-            print(obj)
-    else: 
-        form = ImageForm()
-        context['form'] = form
-        return render( request, "img.html", context) 

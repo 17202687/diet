@@ -23,6 +23,5 @@ urlpatterns = [
     path('main/morning/search/', views.search, name='search'),
     path('main/lunch/search/', views.search, name='search'),
     path('main/dinner/search/', views.search, name='search'),
-    path('img', views.home_view, name='img'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

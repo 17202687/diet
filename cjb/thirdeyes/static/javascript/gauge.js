@@ -9,7 +9,8 @@ function progress(per) {
   var progress = per / 100;
   var dashoffset = CIRCUMFERENCE * (1 - progress);
   
-  value.innerHTML=per +'%';
+  //value.innerHTML=per +'%';
+  value.innerHTML= "{{content}}";
   bar.style.strokeDashoffset = dashoffset;
 }
 

@@ -5,6 +5,7 @@ from .forms import *
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils import timezone
+from datetime import date
 
 
 # Create your views here.
@@ -139,63 +140,99 @@ def dalarm(request):
     return render(request, 'thirdeyes/dalarm.html')
 
 def msearch(request):
+    requestId=request.session['id']
     getFood=Food.objects.all()
+    dt=date.today()
+    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
         print(data['id'])
-        UserFood.objects.create(
-            id=data['id'],
-            dt=data['dt'],
-            meal_type=data['meal_type'],
-            food_name=data['food_name'],
-            food_kcal=int(data['food_kcal'])
-        )
-        return redirect('/')
-    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id']})
+        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=1).exists():
+            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=1)
+            getUser.food_name=data['food_name']
+            getUser.food_kcal=int(data['food_kcal'])
+            getUser.save()
+        else:
+            UserFood.objects.create(
+                id=data['id'],
+                dt=data['dt'],
+                meal_type=data['meal_type'],
+                food_name=data['food_name'],
+                food_kcal=int(data['food_kcal'])
+            )
+        return redirect('/main/')
+    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 def lsearch(request):
+    requestId=request.session['id']
     getFood=Food.objects.all()
+    dt=date.today()
+    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
         print(data['id'])
-        UserFood.objects.create(
-            id=data['id'],
-            dt=data['dt'],
-            meal_type=data['meal_type'],
-            food_name=data['food_name'],
-            food_kcal=int(data['food_kcal'])
-        )
-        return redirect('/')
-    return render(request, 'thirdeyes/lsearch.html', {'foods':getFood, 'id':request.session['id']})
+        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=2).exists():
+            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=2)
+            getUser.food_name=data['food_name']
+            getUser.food_kcal=int(data['food_kcal'])
+            getUser.save()
+        else:
+            UserFood.objects.create(
+                id=data['id'],
+                dt=data['dt'],
+                meal_type=2,
+                food_name=data['food_name'],
+                food_kcal=int(data['food_kcal'])
+            )
+        return redirect('/main/')
+    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 def dsearch(request):
+    requestId=request.session['id']
     getFood=Food.objects.all()
+    dt=date.today()
+    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
         print(data['id'])
-        UserFood.objects.create(
-            id=data['id'],
-            dt=data['dt'],
-            meal_type=data['meal_type'],
-            food_name=data['food_name'],
-            food_kcal=int(data['food_kcal'])
-        )
-        return redirect('/')
-    return render(request, 'thirdeyes/dsearch.html', {'foods':getFood, 'id':request.session['id']})
+        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=3).exists():
+            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=3)
+            getUser.food_name=data['food_name']
+            getUser.food_kcal=int(data['food_kcal'])
+            getUser.save()
+        else:
+            UserFood.objects.create(
+                id=data['id'],
+                dt=data['dt'],
+                meal_type=3,
+                food_name=data['food_name'],
+                food_kcal=int(data['food_kcal'])
+            )
+        return redirect('/main/')
+    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 def ssearch(request):
+    requestId=request.session['id']
     getFood=Food.objects.all()
+    dt=date.today()
+    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
         print(data['id'])
-        UserFood.objects.create(
-            id=data['id'],
-            dt=data['dt'],
-            meal_type=data['meal_type'],
-            food_name=data['food_name'],
-            food_kcal=int(data['food_kcal'])
-        )
-        return redirect('/')
-    return render(request, 'thirdeyes/ssearch.html', {'foods':getFood, 'id':request.session['id']})
+        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=4).exists():
+            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=4)
+            getUser.food_name=data['food_name']
+            getUser.food_kcal=int(data['food_kcal'])
+            getUser.save()
+        else:
+            UserFood.objects.create(
+                id=data['id'],
+                dt=data['dt'],
+                meal_type=4,
+                food_name=data['food_name'],
+                food_kcal=int(data['food_kcal'])
+            )
+        return redirect('/main/')
+    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 # Create your views here. 

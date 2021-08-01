@@ -11,89 +11,36 @@
     <div class="container">
       <label>음식: <input type="text" id="search" onkeyup="filter()" placeholder="음식을 입력해 주세요." /></label>
     </div>
-
-    <div class="listBox">
-      <div class="listInner">
-        <span class="menu">쌀밥</span>
-        <span class="kcal">300kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">비빔밥</span>
-        <span class="kcal">600kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">보리밥</span>
-        <span class="kcal">300kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">완두콩밥</span>
-        <span class="kcal">300kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">팥밥</span>
-        <span class="kcal">300kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">흑미밥</span>
-        <span class="kcal">300kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">돌솥비빔밥</span>
-        <span class="kcal">510kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">볶음밥</span>
-        <span class="kcal">650kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">김치볶음밥</span>
-        <span class="kcal">590kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">김밥</span>
-        <span class="kcal">460kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">카레라이스</span>
-        <span class="kcal">680kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">오므라이스</span>
-        <span class="kcal">690kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">짜장밥</span>
-        <span class="kcal">700kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">회덮밥</span>
-        <span class="kcal">530kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">불고기덮밥</span>
-        <span class="kcal">560kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">오징어덮밥</span>
-        <span class="kcal">500kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">잡채밥</span>
-        <span class="kcal">860kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">생선초밥</span>
-        <span class="kcal">30kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">유뷰초밥</span>
-        <span class="kcal">48kcal</span>
-      </div>
-      <div class="listInner">
-        <span class="menu">김치불고기 삼각김밥</span>
-        <span class="kcal">189kcal</span>
-      </div>
+    <div class="container"> 
+    	<form id="form" method="post">
+        {% csrf_token %}
+        <div id="listBox" class="listBox">
+          
+          {% for food in foods %}
+            <div class="listInner">
+              <script>
+                function change(x,y){
+                  var a=document.getElementById("food_name")
+                  a.value=x;
+                  var b=document.getElementById("food_kcal")
+                  b.value=y;
+                }
+              </script>
+              <button type="submit" style="visibility: hidden;" onClick="change('{{food.food_name}}','{{food.food_kcal}}')">
+                <span style="visibility: visible;" class="menu">{{ food.food_name }}</span>
+                <span style="visibility: visible;" class="kcal">{{ food.food_kcal }}kcal</span>
+              </button>
+            </div>
+          {% endfor %}
+          <input style="visibility: hidden;"type="text"size=1 name="id" value="{{id}}">
+          <input style="visibility: hidden;"type="text"size=1 name="dt" value="2020-10-02">
+          <input style="visibility: hidden;"type="text"size=1 name="meal_type" value=1>
+          <input style="visibility: hidden;"type="text"size=1 name="food_name" id="food_name" value="{{food.food_name}}">
+          <input style="visibility: hidden;"type="text"size=1 name="food_kcal" id="food_kcal" value="{{food.food_kcal}}">
+        </div>
+      </form>
     </div>
+
   <script src="../../../static/javascript/search.js"></script>
   </body>
 </html>

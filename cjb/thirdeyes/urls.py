@@ -20,8 +20,9 @@ urlpatterns = [
     path('main/set/alarm/malarm/', views.malarm, name='malarm'),
     path('main/set/alarm/lalarm/', views.lalarm, name='lalarm'),
     path('main/set/alarm/dalarm/', views.dalarm, name='dalarm'),
-    path('main/morning/search/', views.search, name='search'),
-    path('main/lunch/search/', views.search, name='search'),
-    path('main/dinner/search/', views.search, name='search'),
+    path('main/morning/msearch/', views.msearch, name='msearch'),
+    path('main/lunch/lsearch/', views.lsearch, name='lsearch'),
+    path('main/dinner/dsearch/', views.dsearch, name='dsearch'),
+    path('main/snack/ssearch/', views.ssearch, name='ssearch'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

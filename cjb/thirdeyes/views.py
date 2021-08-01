@@ -137,7 +137,7 @@ def lalarm(request):
 def dalarm(request):
     return render(request, 'thirdeyes/dalarm.html')
 
-def search(request):
+def msearch(request):
     getFood=Food.objects.all()
     if request.method=="POST":
         data=request.POST
@@ -150,6 +150,51 @@ def search(request):
             food_kcal=int(data['food_kcal'])
         )
         return redirect('/')
-    return render(request, 'thirdeyes/search.html', {'foods':getFood, 'id':request.session['id']})
+    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id']})
+
+def lsearch(request):
+    getFood=Food.objects.all()
+    if request.method=="POST":
+        data=request.POST
+        print(data['id'])
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=data['meal_type'],
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal'])
+        )
+        return redirect('/')
+    return render(request, 'thirdeyes/lsearch.html', {'foods':getFood, 'id':request.session['id']})
+
+def dsearch(request):
+    getFood=Food.objects.all()
+    if request.method=="POST":
+        data=request.POST
+        print(data['id'])
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=data['meal_type'],
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal'])
+        )
+        return redirect('/')
+    return render(request, 'thirdeyes/dsearch.html', {'foods':getFood, 'id':request.session['id']})
+
+def ssearch(request):
+    getFood=Food.objects.all()
+    if request.method=="POST":
+        data=request.POST
+        print(data['id'])
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=data['meal_type'],
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal'])
+        )
+        return redirect('/')
+    return render(request, 'thirdeyes/ssearch.html', {'foods':getFood, 'id':request.session['id']})
 
 # Create your views here. 

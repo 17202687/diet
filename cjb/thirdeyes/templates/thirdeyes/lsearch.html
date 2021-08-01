@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="../../../static/CSS/search.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <label>음식: <input type="text" id="search" onkeyup="filter()" placeholder="음식을 입력해 주세요." /></label>
+    </div>
+    <div class="container"> 
+    	<form id="form" method="post">
+        {% csrf_token %}
+        <div id="listBox" class="listBox">
+          
+          {% for food in foods %}
+            <div class="listInner">
+              <script>
+                function change(x,y){
+                  var a=document.getElementById("food_name")
+                  a.value=x;
+                  var b=document.getElementById("food_kcal")
+                  b.value=y;
+                }
+              </script>
+              <button type="submit" style="visibility: hidden;" onClick="change('{{food.food_name}}','{{food.food_kcal}}')">
+                <span style="visibility: visible;" class="menu">{{ food.food_name }}</span>
+                <span style="visibility: visible;" class="kcal">{{ food.food_kcal }}kcal</span>
+              </button>
+            </div>
+          {% endfor %}
+          <input style="visibility: hidden;"type="text"size=1 name="id" value="{{id}}">
+          <input style="visibility: hidden;"type="text"size=1 name="dt" value="2020-10-02">
+          <input style="visibility: hidden;"type="text"size=1 name="meal_type" value=1>
+          <input style="visibility: hidden;"type="text"size=1 name="food_name" id="food_name" value="{{food.food_name}}">
+          <input style="visibility: hidden;"type="text"size=1 name="food_kcal" id="food_kcal" value="{{food.food_kcal}}">
+        </div>
+      </form>
+    </div>
+
+  <script src="../../../static/javascript/search.js"></script>
+  </body>
+</html>

@@ -36,9 +36,10 @@ def main(request):
     requestId=request.session['id']
     if UserInfo.objects.filter(user_id=requestId).exists():
         getUser=UserInfo.objects.get(user_id=requestId)
+        get=UserFood.objects.filter(id=requestId)
         if getUser.gender==1:
                 value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
-        return render(request, 'thirdeyes/main.html',{'content':value})
+        return render(request, 'thirdeyes/main.html',{'content':value, 'eats':get})
     return render(request, 'thirdeyes/main.html') 
 
 def set(request):

@@ -50,6 +50,19 @@
 				</div>
 			</td>
 		</tr>
+
+		<script>
+			var cnt=0;
+			var eat_name=new Array();
+			var eat_kcal=new Array();
+			'{% for eat in eats %}'
+				cnt++;
+				eat_name[cnt]='{{eat.food_name}}'
+				eat_kcal[cnt]='{{eat.food_kcal}}'
+			'{% endfor %}'
+			document.write(eat_name[1],eat_name[2],eat_name[3],eat_name[4]);
+			document.write(eat_kcal[1],eat_kcal[2],eat_kcal[3],eat_kcal[4]);
+		</script>
 		<tr align="center" style= "height: 15%;">
 			<td style ="cursor: pointer;" onclick="location.href='morning/'">아침</td>
 			<td style ="cursor: pointer;" onclick="location.href='lunch/'">점심</td>

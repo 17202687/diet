@@ -1,31 +1,41 @@
-body {
+body 
+{
   background-color: #222;
 }
 
-.circle_progress_wrap {
+.circle_progress_wrap 
+{
   position: relative;
   width: 120px;
   height: 120px;
 }
 
-.circle_progress {
+.circle_progress 
+{
   transform: rotate(-90deg);
 }
 
-.frame, .bar {
+.frame, .bar 
+{
   fill: none;
 }
 
-.frame {
+.frame 
+{
   stroke: #e6e6e6;
 }
 
-.bar {
+.bar 
+{
   stroke: #03c75a;
   stroke-linecap: round;
+  animation: uitLineMove 1s ease-in forwards;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: 1;
 }
 
-.value {
+.value 
+{
   position: absolute;
   left: 0;
   right: 0;

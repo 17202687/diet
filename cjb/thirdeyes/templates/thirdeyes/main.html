@@ -10,42 +10,31 @@
 </head>
 <body>
 	<div class="container">
-	<table border="1" style="height: 500px;">
+	<table border="1" style="height: 700px;">
 		<tr align="center" style= "height: 30%;">
 			<td colspan="2">
 				<div class="circle_progress_wrap">
   				<svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
    				<circle class="frame" cx="60" cy="60" r="54" stroke-width="12" />
     			<circle class="bar" cx="60" cy="60" r="54" stroke-width="12" />
-				<p>잔여 칼로리</P>
   				</svg>
-  				<input id="control" type="range" value="60" />
   				<strong class="value"></strong>
+				<p>잔여 칼로리</P>
 				<script>
-				var control = document.getElementById('control');
 				var bar = document.querySelector('.bar');
 				var value = document.querySelector('.value');
+
 				var RADIUS = 54;
 				var CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-				function progress(per) {
-  					var progress = per / 100;
-  					var dashoffset = CIRCUMFERENCE * (1 - progress);
+  				var progress = (1000+ 300 +270) / 2550;
+  				var dashoffset = CIRCUMFERENCE * (1 - progress);
   
-  					//value.innerHTML=per +'%';
-  					value.innerHTML= Math.round("{{content}}")
-  					bar.style.strokeDashoffset = dashoffset;
-				}
+  				//value.innerHTML=per +'%';
+  				value.innerHTML= Math.round("{{content}}" - ) 
 
-				control.addEventListener('input', function(event) {
-  				progress(event.target.valueAsNumber);
-				});
-				control.addEventListener('change', function(event){
-  				progress(event.target.valueAsNumber);
-				});
-
+  				bar.style.strokeDashoffset = dashoffset;
 				bar.style.strokeDasharray = CIRCUMFERENCE;
-				progress(60);
 				</script>
 				</div>
 			</td>
@@ -53,14 +42,16 @@
 
 		<script>
 			var cnt=0;
-			var eat_name=new Array();
 			var eat_kcal=new Array();
 			'{% for eat in eats %}'
 				cnt++;
-				eat_name[cnt]='{{eat.food_name}}'
 				eat_kcal[cnt]='{{eat.food_kcal}}'
 			'{% endfor %}'
-			document.write(eat_name[1],eat_name[2],eat_name[3],eat_name[4]);
+			for(var i=1;i<=4;++i){
+            	if(eat_kcal[i]==undefined){
+               	eat_kcal[i]=0;
+            	}
+         	}
 			document.write(eat_kcal[1],eat_kcal[2],eat_kcal[3],eat_kcal[4]);
 		</script>
 		<tr align="center" style= "height: 15%;">

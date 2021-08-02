@@ -13,6 +13,19 @@
 	<table border="1" style="height: 700px;">
 		<tr align="center" style= "height: 30%;">
 			<td colspan="2">
+				<script>
+				var cnt=0;
+				var eat_kcal=new Array();
+				var sum=0;
+				'{% for eat in eats %}'
+					cnt++;
+					eat_kcal[cnt]='{{eat.food_kcal}}'
+					if(eat_kcal!=undefined){
+						sum+=parseInt(eat_kcal[cnt])
+					}
+				'{% endfor %}'	
+				document.write(sum);
+				</script>
 				<div class="circle_progress_wrap">
   				<svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
    				<circle class="frame" cx="60" cy="60" r="54" stroke-width="12" />
@@ -51,21 +64,6 @@
 				</div>
 			</td>
 		</tr>
-
-		<script>
-			var cnt=0;
-			var eat_kcal=new Array();
-			var sum=0;
-			'{% for eat in eats %}'
-				cnt++;
-				eat_kcal[cnt]='{{eat.food_kcal}}'
-				if(eat_kcal!=undefined){
-					sum+=parseInt(eat_kcal[cnt])
-				}
-			'{% endfor %}'	
-			document.write(sum);
-		</script>
-
 		<tr align="center" style= "height: 15%;">
 			<td style ="cursor: pointer;" onclick="location.href='morning/'">아침</td>
 			<td style ="cursor: pointer;" onclick="location.href='lunch/'">점심</td>

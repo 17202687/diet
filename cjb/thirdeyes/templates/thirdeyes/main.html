@@ -14,14 +14,12 @@
 		<tr align="center" style= "height: 30%;">
 			<td colspan="2">
 				<script>
-				var cnt=0;
 				var eat_kcal=new Array();
 				var sum=0;
 				'{% for eat in eats %}'
-					cnt++;
-					eat_kcal[cnt]='{{eat.food_kcal}}'
+					var eat_kcal='{{eat.food_kcal}}'
 					if(eat_kcal!=undefined){
-						sum+=parseInt(eat_kcal[cnt])
+						sum+=parseInt(eat_kcal)
 					}
 				'{% endfor %}'	
 				document.write(sum);

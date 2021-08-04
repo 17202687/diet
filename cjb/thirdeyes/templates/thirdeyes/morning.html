@@ -13,7 +13,7 @@
 <table border="1" style="height: 600px;">
 	<tr align="center" style="height: 15%;">
 		<td colspan="2">
-			<button type="button" onclick="history.back(-1);" style="float: left;"><i class="fas fa-angle-left"></i>
+			<button type="button" onclick="location.href='/main/'" style="float: left;"><i class="fas fa-angle-left"></i>
 			</button> 	
 			아침
 			<button type="button" onclick="location.href='msearch'" style="float: right;">
@@ -24,16 +24,23 @@
 			</button>
 		</td>
 	</tr>
-	<tr align="center" style="height: 40%;">
-		<td colspan="2" style ="cursor: pointer;" onclick="location.href='set/'">
-			<h3>사진</h3>
-		</td>
-	</tr>
-	<tr align="center" style="height: 30%;">
-		<td colspan="2">
-			<h3>음식/칼로리</h3>
-		</td>
-	</tr>
+	<form action="" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<tr align="center" style="height: 40%;">
+			<td colspan="2" style ="cursor: pointer;">
+				<h3>사진</h3>
+				<input type="file" name="image">
+			</td>
+		</tr>
+		<tr align="center" style="height: 30%;">
+			<td colspan="2">
+				<h3>음식/칼로리</h3>
+				{% for food in foods %}
+					<p>{{food.food_name}}       {{food.food_kcal}}</p>
+				{% endfor %}
+			</td>
+		</tr>
+	</form>
 	<tr align="center" style="height: 15%;">
 		<td><button onclick="location.href='/main/'">저장</button></td>
 		<td><button onclick="location.href='/main/'">수정</button></td>

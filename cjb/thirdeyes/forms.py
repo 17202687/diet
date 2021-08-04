@@ -31,3 +31,10 @@ class mealForm(forms.ModelForm):
   class Meta:
     model = UserFood
     fields = ["user_no", "id", "dt", "meal_type", "food_name", "food_kcal"]
+
+
+
+class mealForm(forms.ModelForm):
+  class Meta:
+    model = UserFood
+    fields = ["user_no", "id", "dt", "img"]

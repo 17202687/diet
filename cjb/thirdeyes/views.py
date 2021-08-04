@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.utils import timezone
 from datetime import date
+import bcrypt
 
 
 # Create your views here.
@@ -16,10 +17,17 @@ def login(request):
         data=request.POST
         inputId=data['id']
         inputPw=data['pw']
+        hashed_pw=bcrypt.hashpw(inputPw.encode('utf-8'),bcrypt.gensalt())
+        encoded_pw=hashed_pw.decode('utf-8')
+        print(encoded_pw)
         if UserTb.objects.filter(id=data['id']).exists():
             getUser=UserTb.objects.get(id=inputId)
-            if(getUser.pw == inputPw):
+            #if(getUser.pw == inputPw):
+            if(bcrypt.checkpw(inputPw.encode('utf-8'),getUser.pw.encode('utf-8'))):
                 #로그인 성공
+                dt=date.today()
+                dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
+                request.session['date']=dt2
                 request.session['id']=data['id']
                 print(request.session['id'])
                 return redirect('main/')
@@ -35,9 +43,11 @@ def login(request):
 
 def main(request):
     requestId=request.session['id']
+    dt=date.today()
+    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if UserInfo.objects.filter(user_id=requestId).exists():
         getUser=UserInfo.objects.get(user_id=requestId)
-        get=UserFood.objects.filter(id=requestId)
+        get=UserFood.objects.filter(id=requestId,dt=dt2)
         if getUser.gender==1:
                 value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
         return render(request, 'thirdeyes/main.html',{'content':value, 'eats':get})
@@ -48,7 +58,12 @@ def set(request):
 
 def signup(request):
     if request.method == "POST":
+        data=request.POST
+        inputPw=data['pw']
+        hashed_pw=bcrypt.hashpw(inputPw.encode('utf-8'),bcrypt.gensalt())
+        encoded_pw=hashed_pw.decode('utf-8')
         form = MyForm(request.POST)
+        form.pw=encoded_pw
         if form.is_valid():
             data=request.POST
             #id_value=data['id']#form.cleaned_data.get('id')
@@ -57,10 +72,16 @@ def signup(request):
                     "result": "이미 존재하는 아이디입니다."
                 }
             else:
-                form.save()
+                UserTb.objects.create(
+                    id=data['id'],
+                    pw=encoded_pw,
+                    nm=data['nm'],
+                    tel=data['tel'],
+                    email=data['email']
+                )
                 LoginTb.objects.create(
                     user_id=data['id'],
-                    pw=data['pw']
+                    pw=encoded_pw
                 )
                 return redirect('/')
     else:
@@ -69,6 +90,7 @@ def signup(request):
 
 def user(request):
     requestId=request.session['id']
+    print(requestId)
     if UserInfo.objects.filter(user_id=requestId).exists():
         getUser=UserInfo.objects.get(user_id=requestId)
         value={
@@ -119,7 +141,8 @@ def dinner(request):
     return render(request, 'thirdeyes/dinner.html')
 
 def morning(request):
-    return render(request, 'thirdeyes/morning.html')
+    getFood=UserFood.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date'])
+    return render(request, 'thirdeyes/morning.html',{'foods':getFood})
 
 def snack(request):
     return render(request, 'thirdeyes/snack.html')
@@ -146,20 +169,20 @@ def msearch(request):
     dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
-        print(data['id'])
+        '''
         if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=1).exists():
             getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=1)
             getUser.food_name=data['food_name']
             getUser.food_kcal=int(data['food_kcal'])
             getUser.save()
-        else:
-            UserFood.objects.create(
-                id=data['id'],
-                dt=data['dt'],
-                meal_type=data['meal_type'],
-                food_name=data['food_name'],
-                food_kcal=int(data['food_kcal'])
-            )
+        else:'''
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=data['meal_type'],
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal'])
+        )
         return redirect('/main/morning/')
     return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 

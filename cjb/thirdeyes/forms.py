@@ -23,18 +23,9 @@ class UserInfoForm(forms.ModelForm):
     model = UserInfo
     fields = ["user_id", "gender", "age", "height", "weight", "activity"]
 
-class ImageForm(forms.Form):
-  name=forms.CharField()
-  image_field=forms.ImageField()
-
 class mealForm(forms.ModelForm):
   class Meta:
     model = UserFood
     fields = ["user_no", "id", "dt", "meal_type", "food_name", "food_kcal"]
 
 
-
-class mealForm(forms.ModelForm):
-  class Meta:
-    model = UserFood
-    fields = ["user_no", "id", "dt", "img"]

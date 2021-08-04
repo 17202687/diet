@@ -4,6 +4,7 @@ from . import views
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.conf import settings
+from thirdeyes.views import ThirdeyesListAPI
 
 urlpatterns = [
     path('', views.login, name='login'),
@@ -24,5 +25,6 @@ urlpatterns = [
     path('main/lunch/lsearch/', views.lsearch, name='lsearch'),
     path('main/dinner/dsearch/', views.dsearch, name='dsearch'),
     path('main/snack/ssearch/', views.ssearch, name='ssearch'),
+    path('admin/', admin.site.urls), path('api/thirdeyes/', ThirdeyesListAPI.as_view())
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

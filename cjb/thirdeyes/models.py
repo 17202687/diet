@@ -45,16 +45,6 @@ class UserInfo(models.Model):
         managed = False
         db_table = 'user_info'
 
-        
-class FoodImage(models.Model):
-    food_no = models.AutoField(primary_key=True)
-    id = models.CharField(max_length=20, blank=True, null=True)
-    dt = models.DateField(blank=True, null=True)
-    img = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'food_image'
 
 
 class UserFood(models.Model):
@@ -68,3 +58,12 @@ class UserFood(models.Model):
     class Meta:
         managed = False
         db_table = 'user_food'
+
+
+class Thirdeyes(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name

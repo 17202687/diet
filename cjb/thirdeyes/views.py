@@ -7,7 +7,9 @@ from django.http import HttpResponse
 from django.utils import timezone
 from datetime import date
 import bcrypt
-
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import ThirdeyesSerializer
 
 # Create your views here.
 
@@ -259,3 +261,10 @@ def ssearch(request):
     return render(request, 'thirdeyes/ssearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
 
 # Create your views here. 
+
+class ThirdeyesListAPI(APIView):
+    def get(self, request):
+        queryset = Thirdeyes.objects.all()
+        print(queryset)
+        serializer = ThirdeyesSerializer(queryset, many=True)
+        return Response(serializer.data)

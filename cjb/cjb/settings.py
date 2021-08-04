@@ -45,8 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #DRF
     'rest_framework',
     'thirdeyes.apps.ThirdeyesConfig',
+    'rest_framework.authtoken',
+    'api_user',
    
 ]
 
@@ -174,3 +177,10 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
 )
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+    ]
+}

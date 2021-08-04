@@ -66,3 +66,12 @@ class UserFood(models.Model):
     class Meta:
         managed = False
         db_table = 'user_food'
+
+
+class Thirdeyes(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name

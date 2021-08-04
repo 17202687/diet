@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 Django settings for 천진반 project.
 
@@ -185,7 +184,6 @@ REST_FRAMEWORK = {
         #'rest_framework.authentication.TokenAuthentication',
     ]
 }
-=======
 """
 Django settings for 천진반 project.
 
@@ -362,4 +360,3 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
 )
 
->>>>>>> 8aa1a6237c15b39d870b2c5f420a64d792bdc2e9

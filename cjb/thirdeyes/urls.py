@@ -26,7 +26,7 @@ urlpatterns = [
     path('main/dinner/dsearch/', views.dsearch, name='dsearch'),
     path('main/snack/ssearch/', views.ssearch, name='ssearch'),
     path('admin/', admin.site.urls), path('api/thirdeyes/', ThirdeyesListAPI.as_view()),
-    path('checks/', include('checks.urls')),
+    #path('checks/', include('checks.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

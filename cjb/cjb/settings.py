@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'thirdeyes.apps.ThirdeyesConfig',
     'rest_framework.authtoken',
     'api_user',
+    'api_user.apps.piUserConfig',
    
 ]
 

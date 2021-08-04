@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.conf import settings
 from thirdeyes.views import ThirdeyesListAPI
@@ -28,5 +28,6 @@ urlpatterns = [
     path('admin/', admin.site.urls), path('api/thirdeyes/', ThirdeyesListAPI.as_view()),
     #path('checks/', include('checks.urls')),
     path('rest-auth/', include('rest_auth.urls')),
+    path('users/', include('api_user.urls'), name='api_user'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

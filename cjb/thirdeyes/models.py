@@ -67,3 +67,14 @@ class Thirdeyes(models.Model):
 
     def __str__(self):
         return self.name
+
+class FoodImage(models.Model):
+    user_no = models.AutoField(primary_key=True)
+    id = models.CharField(max_length=20, blank=True, null=True)
+    dt = models.DateField(blank=True, null=True)
+    meal_type = models.IntegerField(blank=True, null=True)
+    img = models.ImageField(upload_to="images/")
+
+    class Meta:
+        managed = False
+        db_table = 'food_image'

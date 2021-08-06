@@ -137,17 +137,116 @@ def user(request):
     return render(request, 'thirdeyes/user.html',{'forms':form, 'context':value})
 
 def lunch(request):
-    return render(request, 'thirdeyes/lunch.html')
+    if request.method=="POST":
+        form=foodImageForm(request.POST, request.FILES)
+        if form.is_valid:
+            img=request.FILES["image_field"]
+            print(img)
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=2).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=2)
+                obj.img=img
+                obj.save()
+            else:
+                obj=FoodImage.objects.create(
+                    id=request.session['id'],
+                    meal_type=2,
+                    dt=request.session['date'],
+                    img=img
+                )
+                obj.save()
+                print(obj)
+            return redirect('/main/lunch')
+    getFood=UserFood.objects.filter(id=request.session['id'],meal_type=2,dt=request.session['date'])
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=2).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=2)
+        getUrl=getImg.img.url
+        print(getUrl)
+        return render(request, 'thirdeyes/lunch.html',{'foods':getFood,'img':getUrl})
+    return render(request, 'thirdeyes/lunch.html',{'foods':getFood})
 
 def dinner(request):
-    return render(request, 'thirdeyes/dinner.html')
+    if request.method=="POST":
+        form=foodImageForm(request.POST, request.FILES)
+        if form.is_valid:
+            img=request.FILES["image_field"]
+            print(img)
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=3).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=3)
+                obj.img=img
+                obj.save()
+            else:
+                obj=FoodImage.objects.create(
+                    id=request.session['id'],
+                    meal_type=3,
+                    dt=request.session['date'],
+                    img=img
+                )
+                obj.save()
+                print(obj)
+            return redirect('/main/dinner')
+    getFood=UserFood.objects.filter(id=request.session['id'],meal_type=3,dt=request.session['date'])
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=3).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=3)
+        getUrl=getImg.img.url
+        print(getUrl)
+        return render(request, 'thirdeyes/dinner.html',{'foods':getFood,'img':getUrl})
+    return render(request, 'thirdeyes/dinner.html',{'foods':getFood})
 
 def morning(request):
+    if request.method=="POST":
+        form=foodImageForm(request.POST, request.FILES)
+        if form.is_valid:
+            img=request.FILES["image_field"]
+            print(img)
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=1).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=1)
+                obj.img=img
+                obj.save()
+            else:
+                obj=FoodImage.objects.create(
+                    id=request.session['id'],
+                    meal_type=1,
+                    dt=request.session['date'],
+                    img=img
+                )
+                obj.save()
+                print(obj)
+            return redirect('/main/morning')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date'])
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=1).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=1)
+        getUrl=getImg.img.url
+        print(getUrl)
+        return render(request, 'thirdeyes/morning.html',{'foods':getFood,'img':getUrl})
     return render(request, 'thirdeyes/morning.html',{'foods':getFood})
 
 def snack(request):
-    return render(request, 'thirdeyes/snack.html')
+    if request.method=="POST":
+        form=foodImageForm(request.POST, request.FILES)
+        if form.is_valid:
+            img=request.FILES["image_field"]
+            print(img)
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=4).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=4)
+                obj.img=img
+                obj.save()
+            else:
+                obj=FoodImage.objects.create(
+                    id=request.session['id'],
+                    meal_type=4,
+                    dt=request.session['date'],
+                    img=img
+                )
+                obj.save()
+                print(obj)
+            return redirect('/main/snack')
+    getFood=UserFood.objects.filter(id=request.session['id'],meal_type=4,dt=request.session['date'])
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=4).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=4)
+        getUrl=getImg.img.url
+        print(getUrl)
+        return render(request, 'thirdeyes/snack.html',{'foods':getFood,'img':getUrl})
+    return render(request, 'thirdeyes/snack.html',{'foods':getFood})
 
 def alarm(request):
     return render(request, 'thirdeyes/alarm.html')
@@ -259,6 +358,9 @@ def ssearch(request):
             )
         return redirect('/main/snack/')
     return render(request, 'thirdeyes/ssearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+
+def foodedit(request):
+    return render(request, 'thirdeyes/foodedit.html')
 
 # Create your views here. 
 

@@ -29,3 +29,8 @@ class mealForm(forms.ModelForm):
     fields = ["user_no", "id", "dt", "meal_type", "food_name", "food_kcal"]
 
 
+class foodImageForm(forms.Form):
+  id=forms.CharField()
+  dt=forms.DateField()
+  meal_type=forms.IntegerField()
+  image_field=forms.ImageField()

@@ -24,12 +24,13 @@
 			</button>
 		</td>
 	</tr>
-	<form action="" method="POST" enctype="multipart/form-data">
+	<form method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
 		<tr align="center" style="height: 40%;">
 			<td colspan="2" style ="cursor: pointer;">
 				<h3>사진</h3>
-				<input type="file" name="image">
+				<img id="img" src="{{img}}">
+				<input type="file" name="image_field">
 			</td>
 		</tr>
 		<tr align="center" style="height: 30%;">
@@ -40,11 +41,11 @@
 				{% endfor %}
 			</td>
 		</tr>
+		<tr align="center" style="height: 15%;">
+			<td><button type="submit" onclick="location.href='/main/'">저장</button></td>
+			<td><button type="button" onclick="location.href='/main/'">수정</button></td>
+		</tr>
 	</form>
-	<tr align="center" style="height: 15%;">
-		<td><button onclick="location.href='/main/'">저장</button></td>
-		<td><button onclick="location.href='/main/'">수정</button></td>
-	</tr>
 </table>
 </div>
 </body>

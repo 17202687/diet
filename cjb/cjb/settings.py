@@ -30,9 +30,13 @@ ALLOWED_HOSTS = ['*']
 #"58.141.234.93","192.168.0.1", "127.0.0.1", "localhost", "0.0.0.0", "192.168.0.17", "3.35.120.6", "ec2-3-35-120-6.ap-northeast-2.compute.amazonaws.com"
 
 # 미디어 파일을 관리할 루트 media 디렉터리
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'thirdeyes/media/images')
 # 각 media file에 대한 URL prefix
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, "static"),
+   ]
 
 
 # Application definition

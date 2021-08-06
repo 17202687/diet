@@ -25,6 +25,7 @@ urlpatterns = [
     path('main/lunch/lsearch/', views.lsearch, name='lsearch'),
     path('main/dinner/dsearch/', views.dsearch, name='dsearch'),
     path('main/snack/ssearch/', views.ssearch, name='ssearch'),
+    path('main/foodedit', views.foodedit, name='foodedit'),
     path('admin/', admin.site.urls), path('api/thirdeyes/', ThirdeyesListAPI.as_view())
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

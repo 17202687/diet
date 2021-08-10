@@ -90,6 +90,9 @@ def signup(request):
         form = MyForm()
     return render(request, 'thirdeyes/signup.html', {'form': form})
 
+def forgotpassword(request):
+    return render(request, 'thirdeyes/forgotpassword.html')    
+
 def user(request):
     requestId=request.session['id']
     print(requestId)
@@ -121,7 +124,7 @@ def user(request):
             getUser.weight=data['weight']
             getUser.activity=data['activity']
             getUser.save()
-            return redirect('/main/set/')
+            return redirect('/main/')
         else:
             UserInfo.objects.create(
                 user_id=requestId,
@@ -131,7 +134,7 @@ def user(request):
                 weight=data['weight'],
                 activity=data['activity']
             )
-            return redirect('/main/set/')
+            return redirect('/main/')
     else:
         form=LoginForm()
     return render(request, 'thirdeyes/user.html',{'forms':form, 'context':value})

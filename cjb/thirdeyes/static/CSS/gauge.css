@@ -6,8 +6,8 @@ body
 .circle_progress_wrap 
 {
   position: relative;
-  width: 120px;
-  height: 120px;
+  height: calc(20rem - 43px)!important;
+  width: 100%;
 }
 
 .circle_progress 

@@ -21,7 +21,8 @@
 					if(eat_kcal!=undefined){
 						sum+=parseInt(eat_kcal)
 					}
-				'{% endfor %}'	
+				'{% endfor %}'
+				sum="{{sum}}"
 				document.write(sum);
 				</script>
 				<div class="circle_progress_wrap">
@@ -47,7 +48,8 @@
 					if(eat_kcal!=undefined){
 						sum+=parseInt(eat_kcal[cnt])
 					}
-				'{% endfor %}'	
+				'{% endfor %}'
+				sum="{{sum}}"
 				//document.write(sum);
 
   				var progress = sum / "{{content}}"

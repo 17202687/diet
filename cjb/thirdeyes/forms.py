@@ -26,7 +26,7 @@ class UserInfoForm(forms.ModelForm):
 class mealForm(forms.ModelForm):
   class Meta:
     model = UserFood
-    fields = ["user_no", "id", "dt", "meal_type", "food_name", "food_kcal"]
+    fields = ["user_no", "id", "dt", "meal_type", "food_name", "food_kcal", "food_cnt"]
 
 
 class foodImageForm(forms.Form):

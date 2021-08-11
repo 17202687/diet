@@ -11,6 +11,7 @@ urlpatterns = [
     path('main/', views.main, name='main'),
     path('main/set/', views.set, name='set'),
     path('signup/', views.signup, name='signup'),
+    path('forgotpassword/', views.forgotpassword, name='forgotpassword'),
     path('main/set/user/', views.user, name='user'),
     path('main/morning/', views.morning, name='morning'),
     path('main/lunch/', views.lunch, name='lunch'),

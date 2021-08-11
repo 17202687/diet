@@ -5,7 +5,7 @@ from .models import *
 class MyForm(forms.ModelForm):
   class Meta:
     model = UserTb
-    fields = ["user_no","id","pw","nm","tel","email"]
+    fields = ["user_no","nm","email","pw"]
 
   
 class FoodForm(forms.ModelForm):

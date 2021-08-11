@@ -1,52 +1,271 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-	content="width=device-width,initial-scale=1.0">
-	<link rel="stylesheet" href="../../static/CSS/base.css">
-	<title>점심</title>
-	<script src="https://kit.fontawesome.com/8118e973b8.js" crossorigin="anonymous"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Dashboard</title>
+
+    <style>
+      .searchBox {
+        margin: 20px 0;
+      }
+
+      .listBox {
+        max-width: 500px;
+      }
+
+      .listInner {
+        background-color: #dedede;
+        margin: 10px 5px;
+        padding: 4px;
+      }
+
+      .country {
+        font-weight: bold;
+      }
+
+    </style>
+
+    <!-- Custom fonts for this template-->
+    <link href="../../../static/CSS/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../../static/CSS/sb-admin-2.min.css" rel="stylesheet">
+
 </head>
-<body>
-<div class="container">
-<table border="1" style="height: 600px;">
-	<tr align="center" style="height: 15%;">
-		<td colspan="2">
-			<button type="button" onclick="location.href='/main/'" style="float: left;"><i class="fas fa-angle-left"></i>
-			</button> 	
-			점심
-			<button type="button" onclick="location.href='lsearch'" style="float: right;"s>
-				<i class="fas fa-search"></i>
-			</button>
-			<button type="button" onclick="history.back(-1);" style="float: right;">
-				<i class="fas fa-camera"></i>
-			</button>
-		</td>
-	</tr>
-	<form method="POST" enctype="multipart/form-data">
-		{% csrf_token %}
-		<tr align="center" style="height: 40%;">
-			<td colspan="2" style ="cursor: pointer;">
-				<h3>사진</h3>
-				<img id="img" src="{{img}}">
-				<input type="file" name="image_field">
-			</td>
-		</tr>
-		<tr align="center" style="height: 30%;">
-			<td colspan="2">
-				<h3>음식/칼로리</h3>
-				{% for food in foods %}
-					<p>{{food.food_name}}       {{food.food_kcal}}</p>
-				{% endfor %}
-			</td>
-		</tr>
-		<tr align="center" style="height: 15%;">
-			<td><button type="submit" onclick="location.href='/main/'">저장</button></td>
-			<td><button type="button" onclick="location.href='/main/lunch/lfoodedit'">수정</button></td>
-		</tr>
-	</form>
-</table>
-</div>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Topbar Search -->
+                    <div><h3>천진반</h3></div>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        
+
+                        
+
+                        
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    프로필
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    설정
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="container">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">점심</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Content Column -->
+                        <div class="col-lg-6 mb-4">
+
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <ul>
+                                        <li class="nav-item dropdown no-arrow">
+                                            <a class="fas fa-search" href="lsearch" role="button" style="float: right; padding: .5rem 1rem;"></a>
+
+                                   
+                                            <a class="nav-link dropdown-toggle fas fa-camera" href="#" id="userDropdown" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
+                                            </a>
+
+                                            <!-- Dropdown - User Information -->
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                                aria-labelledby="userDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                <i class="fas fa-camera fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                카메라
+                                            </a>
+                                            <a class="dropdown-item" onclick="imgupload()">
+                                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                앨범
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <script src="https://kit.fontawesome.com/8118e973b8.js" crossorigin="anonymous"></script>
+                                </div>
+                                <div class="card-body">
+
+                                    <!-- Illustrations -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">사진</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="text-center">
+                                                <img id="image_section" class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                                    src="{{img}}" alt="...">
+                                            </div>
+                                            <input id="imgupload" type="file" name="image_field" style="visibility: hidden;" size="1">
+                                        </div>
+                                    </div>
+
+                                    <!-- Illustrations -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">음식/kcal</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="text-center">
+                                            </div>
+                                            {% for food in foods %}
+                                                <p>{{food.food_name}} / {{food.sum}}kcal</p>
+                                            {% endfor %}
+                                        </div>
+                                        <script>
+                                            function imgupload(){
+                                                var a=document.getElementById("imgupload");
+                                                a.click();
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button type="submit">저장</button>
+                            <a href="lfoodedit">수정</a>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                <script>
+                function readImage(input) {
+                    // 인풋 태그에 파일이 있는 경우
+                    if(input.files && input.files[0]) {
+                        // 이미지 파일인지 검사 (생략)
+                        // FileReader 인스턴스 생성
+                        const reader = new FileReader()
+                        // 이미지가 로드가 된 경우
+                        reader.onload = e => {
+                            const previewImage = document.getElementById("image_section")
+                            previewImage.src = e.target.result
+                        }
+                        // reader가 이미지 읽도록 하기
+                        reader.readAsDataURL(input.files[0])
+                    }
+                }
+                // input file에 change 이벤트 부여
+                const inputImage = document.getElementById("imgupload")
+                inputImage.addEventListener("change", e => {
+                    readImage(e.target)
+                })
+                </script>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../../../static/javascript/jquery.min.js"></script>
+    <script src="../../../static/javascript/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../../../static/javascript/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../../../static/javascript/sb-admin-2.min.js"></script>
+
+
 </body>
+
 </html>

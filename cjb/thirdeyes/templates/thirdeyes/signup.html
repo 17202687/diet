@@ -1,76 +1,102 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-	content="width=device-width,initial-scale=1.0">
-	<link rel="stylesheet" href="../../static/CSS/base.css">
-	<title>회원가입</title>
-</head>
-<body>
-  <script>
-	  function done(){
-		  var form=document.getElementById("form");
-		  var pw=form.pw.value;
-		  var pwcheck=form.pwcheck.value;
+<html lang="en">
 
-		  if(pw != pwcheck){
-			  alert("비밀번호가 다릅니다.");
-		  }
-		  else{
-			  form.submit();
-        alert('회원가입 성공!')
-		  }
-	  }
-  </script>
-  <div class="container"> 
-    <table border="1" style="height: 500px;">
-      <tr align="center">
-        <td>
-          <h3>회원가입</h3>
-        </td>
-      </tr>
-      <form method="post">
-        {% csrf_token %}
-        <tr align="left"> 
-          <td>
-            ID : <input type="text" size="15" name="id" value="">
-            <button type="button" onclick="location.href='/'">확인</button>
-          </td>
-        </tr>
-        <tr align="left">  
-          <td>
-            PW 확인 : <input id="pw" type="password" size="15" name="pw" value="">
-          </td>
-        </tr>
-        <tr align="left">
-          <td>
-            PW 재확인 : <input id="pwcheck" type="password" size="15" name="pwcheck" value="">
-          </td>
-        </tr>
-        <tr align="left"> 
-          <td>
-            이름 : <input id="nm" type="text" size="15" name="nm" value="">
-          </td>
-        </tr>
-        <tr align="left">
-          <td for="tel">
-            전화번호 : <input id="tel" type="text" size="15" name="tel" value="">
-          </td>
-        </tr>
-        <tr align="left"> 
-          <td>
-            이메일 : <input id="email" type="text" size="15" name="email" value="">
-          </td>
-        </tr>
-        <tr align="center">
-          <td>
-            <button onclick="done()" role="button" type="button" size="15"  class="btn btn-primary">확인</button>
-          </td>
-        </tr>
-      </form>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Register</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../../static/CSS/all.min.css" rel="stylesheet" type="test/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../static/CSS/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+<script>
+  if(pw != pwcheck){
+    alert("비밀번호가 다릅니다.");
+  }
+  else{
+    form.submit();
+    alert('회원가입 성공!')
+  }
+</script>
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">회원가입</h1>
+                            </div>
+                            <form class="user" method="post" id="signupform">
+                              {% csrf_token %}
+                                <div class="form-group">                                   
+                                        <input type="text" name="name" class="form-control form-control-user" id="exampleFirstName"
+                                            placeholder="이름">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
+                                        placeholder="이메일">
+                                </div>
+                                <div class="form-group">
+                                        <input type="password" name="pw" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="비밀번호">
+                                </div>
+                                <div class="form-group">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="exampleRepeatPassword" placeholder="비밀번호 재확인">
+                                </div>
+                                <a class="btn btn-primary btn-user btn-block" onclick="formsubmit()">
+                                    확인
+                                </a>
+                            </form>
+                            <script>
+                              function formsubmit(){
+                                var a=document.getElementById("signupform");
+                                a.submit();
+                              }
+                            </script>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="/forgotpassword">비밀번호 찾기</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="/">로그인</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </table>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../../../static/javascript/jquery.min.js"></script>
+    <script src="../../../static/javascript/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../../../static/javascript/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../../../static/javascript/sb-admin-2.min.js"></script>
+
 </body>
+
 </html>

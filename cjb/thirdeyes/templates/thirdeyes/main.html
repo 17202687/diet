@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="../../../static/CSS/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../static/CSS/gauge.css">
+    <link rel="stylesheet" href="../../../static/CSS/calendar.css">
 </head>
 
 <body id="page-top">
@@ -292,12 +293,85 @@
 
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="circle_progress_wrap">
-                                        <svg class="circle_progress" width="550" height="280" viewBox="0 0 280 280">
-                                            <circle class="frame" cx="140" cy="140" r="110" stroke-width="30" />
-                                            <circle class="bar" cx="140" cy="140" r="110" stroke-width="30" />
-                                        </svg>
-                                        <strong class="value"></strong>
+                                    <div class="elegant-calencar">
+                                       <p id="reset">reset</p>
+                                        <div id="header" class="clearfix">
+                                           <div class="pre-button"><</div>
+                                            <div class="head-info">
+                                                <div class="head-day"></div>
+                                                <div class="head-month"></div>
+                                            </div>
+                                            <div class="next-button">></div>
+                                        </div>
+                                        <table id="calendar">
+                                            <thead>
+                                                <tr>
+                                                    <th>일</th>
+                                                    <th>월</th>
+                                                    <th>화</th>
+                                                    <th>수</th>
+                                                    <th>목</th>
+                                                    <th>금</th>
+                                                    <th>토</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -487,6 +561,7 @@
     <script src="../../../static/javascript/chart-area-demo.js"></script>
     <script src="../../../static/javascript/chart-pie-demo.js"></script>
     <script src="../../../static/javascript/chart-bar-demo.js"></script>
+    <script src="../../../static/javascript/calendar.js"></script>
 
 </body>
 

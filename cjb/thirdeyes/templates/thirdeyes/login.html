@@ -45,7 +45,7 @@
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp" name="id"
+                                                id="exampleInputEmail" aria-describedby="emailHelp" name="email"
                                                 placeholder="아이디">
                                         </div>
                                         <div class="form-group">
@@ -58,7 +58,7 @@
                                                 <label class="custom-control-label" for="customCheck">자동 로그인</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" onclick="location.href='main/'">Login</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
                                         {% if messages %}
                                         <ul class="messages">
                                             {% for message in messages %}

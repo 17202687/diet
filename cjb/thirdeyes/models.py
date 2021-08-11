@@ -3,11 +3,9 @@ from django.db import models
 # Create your models here.
 class UserTb(models.Model):
     user_no = models.AutoField(primary_key=True)
-    id = models.CharField(max_length=20, blank=True, null=True)
-    pw = models.CharField(max_length=100, blank=True, null=True)
     nm = models.CharField(max_length=20, blank=True, null=True)
-    tel = models.IntegerField(blank=True, null=True)
     email = models.CharField(max_length=30, blank=True, null=True)
+    pw = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -54,6 +52,7 @@ class UserFood(models.Model):
     meal_type = models.IntegerField(blank=True, null=True)
     food_name = models.CharField(max_length=20, blank=True, null=True)
     food_kcal = models.IntegerField(blank=True, null=True)
+    food_cnt = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

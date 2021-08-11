@@ -17,20 +17,20 @@ def login(request):
     if request.method=="POST":
         form = LoginForm(request.POST)
         data=request.POST
-        inputId=data['id']
+        inputId=data['email']
         inputPw=data['pw']
         hashed_pw=bcrypt.hashpw(inputPw.encode('utf-8'),bcrypt.gensalt())
         encoded_pw=hashed_pw.decode('utf-8')
         print(encoded_pw)
-        if UserTb.objects.filter(id=data['id']).exists():
-            getUser=UserTb.objects.get(id=inputId)
+        if UserTb.objects.filter(email=data['email']).exists():
+            getUser=UserTb.objects.get(email=inputId)
             #if(getUser.pw == inputPw):
             if(bcrypt.checkpw(inputPw.encode('utf-8'),getUser.pw.encode('utf-8'))):
                 #로그인 성공
                 dt=date.today()
                 dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
                 request.session['date']=dt2
-                request.session['id']=data['id']
+                request.session['id']=data['email']
                 print(request.session['id'])
                 return redirect('main/')
             else:
@@ -47,12 +47,45 @@ def main(request):
     requestId=request.session['id']
     dt=date.today()
     dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
+    mUrl=""
+    lUrl=""
+    dUrl=""
+    sUrl=""
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=1,dt=request.session['date'])
+        mUrl=getImg.img.url
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=2,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=2,dt=request.session['date'])
+        lUrl=getImg.img.url
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=3,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=3,dt=request.session['date'])
+        dUrl=getImg.img.url
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=4,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=4,dt=request.session['date'])
+        sUrl=getImg.img.url
     if UserInfo.objects.filter(user_id=requestId).exists():
         getUser=UserInfo.objects.get(user_id=requestId)
-        get=UserFood.objects.filter(id=requestId,dt=dt2)
+        msum=0
+        lsum=0
+        dsum=0
+        ssum=0
+        sum=0
+        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=1)
+        for a in get:
+            msum+=a.food_kcal*a.food_cnt
+        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=2)
+        for a in get:
+            lsum+=a.food_kcal*a.food_cnt
+        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=3)
+        for a in get:
+            dsum+=a.food_kcal*a.food_cnt
+        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=4)
+        for a in get:
+            ssum+=a.food_kcal*a.food_cnt
+        sum=msum+lsum+dsum+ssum
         if getUser.gender==1:
-                value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
-        return render(request, 'thirdeyes/main.html',{'content':value, 'eats':get})
+            value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
+        return render(request, 'thirdeyes/main.html',{'content':value, 'eats':get, 'sum':sum, 'username':UserTb.objects.get(email=request.session['id']).nm,'mUrl':mUrl, 'lUrl':lUrl,'dUrl':dUrl,'sUrl':sUrl,'msum':msum,'lsum':lsum,'dsum':dsum,'ssum':ssum})
     return render(request, 'thirdeyes/main.html') 
 
 def set(request):
@@ -69,20 +102,18 @@ def signup(request):
         if form.is_valid():
             data=request.POST
             #id_value=data['id']#form.cleaned_data.get('id')
-            if UserTb.objects.filter(id=data['id']).exists():
+            if UserTb.objects.filter(email=data['email']).exists():
                 context={
                     "result": "이미 존재하는 아이디입니다."
                 }
             else:
                 UserTb.objects.create(
-                    id=data['id'],
+                    nm=data['name'],
                     pw=encoded_pw,
-                    nm=data['nm'],
-                    tel=data['tel'],
                     email=data['email']
                 )
                 LoginTb.objects.create(
-                    user_id=data['id'],
+                    user_id=data['email'],
                     pw=encoded_pw
                 )
                 return redirect('/')
@@ -143,10 +174,12 @@ def lunch(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
-            img=request.FILES["image_field"]
-            print(img)
-            if(FoodImage.objects.filter(id=request.session['id'],meal_type=2).exists()):
-                obj=FoodImage.objects.get(id=request.session['id'],meal_type=2)
+            try:
+                img=request.FILES["image_field"]
+            except:
+                return redirect('/main/')
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=2,dt=request.session['date']).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=2,dt=request.session['date'])
                 obj.img=img
                 obj.save()
             else:
@@ -157,13 +190,15 @@ def lunch(request):
                     img=img
                 )
                 obj.save()
-                print(obj)
             return redirect('/main/lunch')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=2,dt=request.session['date'])
-    if(FoodImage.objects.filter(id=request.session['id'],meal_type=2).exists()):
-        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=2)
+    i=0
+    while i<len(getFood):
+        getFood[i].sum=getFood[i].food_kcal*getFood[i].food_cnt
+        i+=1
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=2,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=2,dt=request.session['date'])
         getUrl=getImg.img.url
-        print(getUrl)
         return render(request, 'thirdeyes/lunch.html',{'foods':getFood,'img':getUrl})
     return render(request, 'thirdeyes/lunch.html',{'foods':getFood})
 
@@ -171,10 +206,13 @@ def dinner(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
+            try:
+                img=request.FILES["image_field"]
+            except:
+                return redirect('/main/')
             img=request.FILES["image_field"]
-            print(img)
-            if(FoodImage.objects.filter(id=request.session['id'],meal_type=3).exists()):
-                obj=FoodImage.objects.get(id=request.session['id'],meal_type=3)
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=3,dt=request.session['date']).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=3,dt=request.session['date'])
                 obj.img=img
                 obj.save()
             else:
@@ -185,13 +223,15 @@ def dinner(request):
                     img=img
                 )
                 obj.save()
-                print(obj)
             return redirect('/main/dinner')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=3,dt=request.session['date'])
-    if(FoodImage.objects.filter(id=request.session['id'],meal_type=3).exists()):
-        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=3)
+    i=0
+    while i<len(getFood):
+        getFood[i].sum=getFood[i].food_kcal*getFood[i].food_cnt
+        i+=1
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=3,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=3,dt=request.session['date'])
         getUrl=getImg.img.url
-        print(getUrl)
         return render(request, 'thirdeyes/dinner.html',{'foods':getFood,'img':getUrl})
     return render(request, 'thirdeyes/dinner.html',{'foods':getFood})
 
@@ -199,10 +239,12 @@ def morning(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
-            img=request.FILES["image_field"]
-            print(img)
-            if(FoodImage.objects.filter(id=request.session['id'],meal_type=1).exists()):
-                obj=FoodImage.objects.get(id=request.session['id'],meal_type=1)
+            try:
+                img=request.FILES["image_field"]
+            except:
+                return redirect('/main/')
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date']).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=1,dt=request.session['date'])
                 obj.img=img
                 obj.save()
             else:
@@ -213,13 +255,15 @@ def morning(request):
                     img=img
                 )
                 obj.save()
-                print(obj)
             return redirect('/main/morning')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date'])
-    if(FoodImage.objects.filter(id=request.session['id'],meal_type=1).exists()):
-        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=1)
+    i=0
+    while i<len(getFood):
+        getFood[i].sum=getFood[i].food_kcal*getFood[i].food_cnt
+        i+=1
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=1,dt=request.session['date'])
         getUrl=getImg.img.url
-        print(getUrl)
         return render(request, 'thirdeyes/morning.html',{'foods':getFood,'img':getUrl})
     return render(request, 'thirdeyes/morning.html',{'foods':getFood})
 
@@ -227,10 +271,13 @@ def snack(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
+            try:
+                img=request.FILES["image_field"]
+            except:
+                return redirect('/main/')
             img=request.FILES["image_field"]
-            print(img)
-            if(FoodImage.objects.filter(id=request.session['id'],meal_type=4).exists()):
-                obj=FoodImage.objects.get(id=request.session['id'],meal_type=4)
+            if(FoodImage.objects.filter(id=request.session['id'],meal_type=4,dt=request.session['date']).exists()):
+                obj=FoodImage.objects.get(id=request.session['id'],meal_type=4,dt=request.session['date'])
                 obj.img=img
                 obj.save()
             else:
@@ -241,13 +288,15 @@ def snack(request):
                     img=img
                 )
                 obj.save()
-                print(obj)
             return redirect('/main/snack')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=4,dt=request.session['date'])
-    if(FoodImage.objects.filter(id=request.session['id'],meal_type=4).exists()):
-        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=4)
+    i=0
+    while i<len(getFood):
+        getFood[i].sum=getFood[i].food_kcal*getFood[i].food_cnt
+        i+=1
+    if(FoodImage.objects.filter(id=request.session['id'],meal_type=4,dt=request.session['date']).exists()):
+        getImg=FoodImage.objects.get(id=request.session['id'],meal_type=4,dt=request.session['date'])
         getUrl=getImg.img.url
-        print(getUrl)
         return render(request, 'thirdeyes/snack.html',{'foods':getFood,'img':getUrl})
     return render(request, 'thirdeyes/snack.html',{'foods':getFood})
 
@@ -267,103 +316,188 @@ def dalarm(request):
     return render(request, 'thirdeyes/dalarm.html')
 
 def msearch(request):
-    requestId=request.session['id']
     getFood=Food.objects.all()
-    dt=date.today()
-    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
-        '''
-        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=1).exists():
-            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=1)
-            getUser.food_name=data['food_name']
-            getUser.food_kcal=int(data['food_kcal'])
-            getUser.save()
-        else:'''
         UserFood.objects.create(
             id=data['id'],
             dt=data['dt'],
             meal_type=data['meal_type'],
             food_name=data['food_name'],
-            food_kcal=int(data['food_kcal'])
+            food_kcal=int(data['food_kcal']),
+            food_cnt=1
         )
         return redirect('/main/morning/')
-    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+    return render(request, 'thirdeyes/msearch.html', {'foods':getFood, 'id':request.session['id'],'date':request.session['date']})
 
 def lsearch(request):
-    requestId=request.session['id']
     getFood=Food.objects.all()
-    dt=date.today()
-    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
-        print(data['id'])
-        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=2).exists():
-            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=2)
-            getUser.food_name=data['food_name']
-            getUser.food_kcal=int(data['food_kcal'])
-            getUser.save()
-        else:
-            UserFood.objects.create(
-                id=data['id'],
-                dt=data['dt'],
-                meal_type=2,
-                food_name=data['food_name'],
-                food_kcal=int(data['food_kcal'])
-            )
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=2,
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal']),
+            food_cnt=1
+        )
         return redirect('/main/lunch/')
-    return render(request, 'thirdeyes/lsearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+    return render(request, 'thirdeyes/lsearch.html', {'foods':getFood, 'id':request.session['id'],'date':request.session['date']})
 
 def dsearch(request):
-    requestId=request.session['id']
     getFood=Food.objects.all()
-    dt=date.today()
-    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
-        print(data['id'])
-        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=3).exists():
-            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=3)
-            getUser.food_name=data['food_name']
-            getUser.food_kcal=int(data['food_kcal'])
-            getUser.save()
-        else:
-            UserFood.objects.create(
-                id=data['id'],
-                dt=data['dt'],
-                meal_type=3,
-                food_name=data['food_name'],
-                food_kcal=int(data['food_kcal'])
-            )
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=3,
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal']),
+            food_cnt=1
+        )
         return redirect('/main/dinner/')
-    return render(request, 'thirdeyes/dsearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+    return render(request, 'thirdeyes/dsearch.html', {'foods':getFood, 'id':request.session['id'],'date':request.session['date']})
 
 def ssearch(request):
-    requestId=request.session['id']
     getFood=Food.objects.all()
-    dt=date.today()
-    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     if request.method=="POST":
         data=request.POST
-        print(data['id'])
-        if UserFood.objects.filter(id=requestId,dt=dt2,meal_type=4).exists():
-            getUser=UserFood.objects.get(id=requestId,dt=dt2,meal_type=4)
-            getUser.food_name=data['food_name']
-            getUser.food_kcal=int(data['food_kcal'])
-            getUser.save()
-        else:
-            UserFood.objects.create(
-                id=data['id'],
-                dt=data['dt'],
-                meal_type=4,
-                food_name=data['food_name'],
-                food_kcal=int(data['food_kcal'])
-            )
+        UserFood.objects.create(
+            id=data['id'],
+            dt=data['dt'],
+            meal_type=4,
+            food_name=data['food_name'],
+            food_kcal=int(data['food_kcal']),
+            food_cnt=1
+        )
         return redirect('/main/snack/')
-    return render(request, 'thirdeyes/ssearch.html', {'foods':getFood, 'id':request.session['id'],'date':dt2})
+    return render(request, 'thirdeyes/ssearch.html', {'foods':getFood, 'id':request.session['id'],'date':request.session['date']})
 
-def foodedit(request):
-    return render(request, 'thirdeyes/foodedit.html')
+def mfoodedit(request):
+    if request.method=="POST":
+        data=request.POST
+        i=0
+        getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=1)
+        getFood.delete()
+        foodnames=data.getlist('food_name')[0].split(",")
+        foodcnt=data.getlist('foodcnt')[0].split(",")
+        while i<len(data.getlist('p_price')):
+            UserFood.objects.create(
+                id=request.session['id'],
+                dt=request.session['date'],
+                meal_type=1,
+                food_name=foodnames[i],
+                food_kcal=int(data.getlist('p_price')[i]),
+                food_cnt=int(foodcnt[i])
+            )
+            i+=1
+        return redirect("/main/morning/")
+    getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=1)
+    sum=0
+    kcal=[0]
+    cnt=0
+    amount=0
+    for food in getFood:
+        sum+=food.food_kcal*food.food_cnt
+        kcal.append(food.food_kcal*food.food_cnt)
+        cnt+=food.food_cnt
+        amount+=1
+    return render(request, 'thirdeyes/mfoodedit.html',{'foods':getFood,'sum':sum,'kcal':kcal,'cnt':cnt,'amount':amount})
+
+def lfoodedit(request):
+    if request.method=="POST":
+        data=request.POST
+        i=0
+        getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=2)
+        getFood.delete()
+        foodnames=data.getlist('food_name')[0].split(",")
+        foodcnt=data.getlist('foodcnt')[0].split(",")
+        while i<len(data.getlist('p_price')):
+            UserFood.objects.create(
+                id=request.session['id'],
+                dt=request.session['date'],
+                meal_type=2,
+                food_name=foodnames[i],
+                food_kcal=int(data.getlist('p_price')[i]),
+                food_cnt=int(foodcnt[i])
+            )
+            i+=1
+        return redirect("/main/lunch/")
+    getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=2)
+    sum=0
+    kcal=[0]
+    cnt=0
+    amount=0
+    for food in getFood:
+        sum+=food.food_kcal*food.food_cnt
+        kcal.append(food.food_kcal*food.food_cnt)
+        cnt+=food.food_cnt
+        amount+=1
+    return render(request, 'thirdeyes/mfoodedit.html',{'foods':getFood,'sum':sum,'kcal':kcal,'cnt':cnt,'amount':amount})
+
+def dfoodedit(request):
+    if request.method=="POST":
+        data=request.POST
+        i=0
+        getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=3)
+        getFood.delete()
+        foodnames=data.getlist('food_name')[0].split(",")
+        foodcnt=data.getlist('foodcnt')[0].split(",")
+        while i<len(data.getlist('p_price')):
+            UserFood.objects.create(
+                id=request.session['id'],
+                dt=request.session['date'],
+                meal_type=3,
+                food_name=foodnames[i],
+                food_kcal=int(data.getlist('p_price')[i]),
+                food_cnt=int(foodcnt[i])
+            )
+            i+=1
+        return redirect("/main/dinner/")
+    getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=3)
+    sum=0
+    kcal=[0]
+    cnt=0
+    amount=0
+    for food in getFood:
+        sum+=food.food_kcal*food.food_cnt
+        kcal.append(food.food_kcal*food.food_cnt)
+        cnt+=food.food_cnt
+        amount+=1
+    return render(request, 'thirdeyes/mfoodedit.html',{'foods':getFood,'sum':sum,'kcal':kcal,'cnt':cnt,'amount':amount})
+
+def sfoodedit(request):
+    if request.method=="POST":
+        data=request.POST
+        i=0
+        getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=4)
+        getFood.delete()
+        foodnames=data.getlist('food_name')[0].split(",")
+        foodcnt=data.getlist('foodcnt')[0].split(",")
+        while i<len(data.getlist('p_price')):
+            UserFood.objects.create(
+                id=request.session['id'],
+                dt=request.session['date'],
+                meal_type=4,
+                food_name=foodnames[i],
+                food_kcal=int(data.getlist('p_price')[i]),
+                food_cnt=int(foodcnt[i])
+            )
+            i+=1
+        return redirect("/main/snack/")
+    getFood=UserFood.objects.filter(id=request.session['id'],dt=request.session['date'],meal_type=4)
+    sum=0
+    kcal=[0]
+    cnt=0
+    amount=0
+    for food in getFood:
+        sum+=food.food_kcal*food.food_cnt
+        kcal.append(food.food_kcal*food.food_cnt)
+        cnt+=food.food_cnt
+        amount+=1
+    return render(request, 'thirdeyes/mfoodedit.html',{'foods':getFood,'sum':sum,'kcal':kcal,'cnt':cnt,'amount':amount})
 
 # Create your views here. 
 

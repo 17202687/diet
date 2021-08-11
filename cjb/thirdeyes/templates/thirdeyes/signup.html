@@ -21,7 +21,15 @@
     <link href="../../static/CSS/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
-
+<script>
+  if(pw != pwcheck){
+    alert("비밀번호가 다릅니다.");
+  }
+  else{
+    form.submit();
+    alert('회원가입 성공!')
+  }
+</script>
 <body class="bg-gradient-primary">
 
     <div class="container">
@@ -36,27 +44,34 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">회원가입</h1>
                             </div>
-                            <form class="user" method="post">
+                            <form class="user" method="post" id="signupform">
+                              {% csrf_token %}
                                 <div class="form-group">                                   
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="text" name="name" class="form-control form-control-user" id="exampleFirstName"
                                             placeholder="이름">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                    <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
                                         placeholder="이메일">
                                 </div>
                                 <div class="form-group">
-                                        <input type="password" class="form-control form-control-user"
+                                        <input type="password" name="pw" class="form-control form-control-user"
                                             id="exampleInputPassword" placeholder="비밀번호">
                                 </div>
                                 <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
                                             id="exampleRepeatPassword" placeholder="비밀번호 재확인">
                                 </div>
-                                <a href="/" class="btn btn-primary btn-user btn-block">
+                                <a class="btn btn-primary btn-user btn-block" onclick="formsubmit()">
                                     확인
                                 </a>
                             </form>
+                            <script>
+                              function formsubmit(){
+                                var a=document.getElementById("signupform");
+                                a.submit();
+                              }
+                            </script>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="/forgotpassword">비밀번호 찾기</a>

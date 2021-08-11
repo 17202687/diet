@@ -106,7 +106,9 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <div class="container">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">저녁</h1>
@@ -136,7 +138,7 @@
                                                 <i class="fas fa-camera fa-sm fa-fw mr-2 text-gray-400"></i>
                                                 카메라
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" onclick="imgupload()">
                                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                                 앨범
                                             </a>
@@ -153,13 +155,10 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="text-center">
-                                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                                    src="img/undraw_posting_photo.svg" alt="...">
+                                                <img id="image_section" class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                                    src="{{img}}" alt="...">
                                             </div>
-                                            <p>Add some quality, svg illustrations to your project courtesy of <a
-                                                    target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                                constantly updated collection of beautiful svg images that you can use
-                                                completely free and without attribution!</p>
+                                            <input id="imgupload" type="file" name="image_field" style="visibility: hidden;" size="1">
                                         </div>
                                     </div>
 
@@ -170,21 +169,49 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="text-center">
-                                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                                    src="img/undraw_posting_photo.svg" alt="...">
                                             </div>
-                                            <p>Add some quality, svg illustrations to your project courtesy of <a
-                                                    target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                                constantly updated collection of beautiful svg images that you can use
-                                                completely free and without attribution!</p>
+                                            {% for food in foods %}
+                                                <p>{{food.food_name}} / {{food.sum}}kcal</p>
+                                            {% endfor %}
                                         </div>
+                                        <script>
+                                            function imgupload(){
+                                                var a=document.getElementById("imgupload");
+                                                a.click();
+                                            }
+                                        </script>
                                     </div>
                                 </div>
+
                             </div>
-
+                            <button type="submit">저장</button>
+                            <a href="dfoodedit">수정</a>
                         </div>
-
+                    </div>
+                </form>
                 </div>
+                <script>
+                function readImage(input) {
+                    // 인풋 태그에 파일이 있는 경우
+                    if(input.files && input.files[0]) {
+                        // 이미지 파일인지 검사 (생략)
+                        // FileReader 인스턴스 생성
+                        const reader = new FileReader()
+                        // 이미지가 로드가 된 경우
+                        reader.onload = e => {
+                            const previewImage = document.getElementById("image_section")
+                            previewImage.src = e.target.result
+                        }
+                        // reader가 이미지 읽도록 하기
+                        reader.readAsDataURL(input.files[0])
+                    }
+                }
+                // input file에 change 이벤트 부여
+                const inputImage = document.getElementById("imgupload")
+                inputImage.addEventListener("change", e => {
+                    readImage(e.target)
+                })
+                </script>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -237,6 +264,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../../../static/javascript/sb-admin-2.min.js"></script>
+
 
 </body>
 

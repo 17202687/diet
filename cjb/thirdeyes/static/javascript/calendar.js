@@ -1,3 +1,4 @@
+var form=document.getElementById("calendarform");
 document.addEventListener('DOMContentLoaded', function(){
     var today = new Date(),
         year = today.getFullYear(),
@@ -139,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function(){
             var expires = "";
         }
         document.cookie = name + "=" + selectedDay + expires + "; path=/";
+        document.write(selectedDay)
     };
     
     Calendar.prototype.getCookie = function(name) {

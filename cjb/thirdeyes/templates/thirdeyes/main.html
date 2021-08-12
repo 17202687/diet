@@ -2,7 +2,178 @@
 <html lang="en">
 
 <head>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+    
+        var today = new Date("{{year}}","{{month}}","{{day}}"),
+            year = today.getFullYear(),
+            month = today.getMonth(),
+            monthTag =["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+            day = today.getDate(),
+            days = document.getElementsByTagName('td'),
+            selectedDay,
+            setDate,
+            daysLen = days.length;
+    // options should like '2014-01-01'
+        function Calendar(selector, options) {
+            this.options = options;
+            this.draw();
+        }
+        
+        Calendar.prototype.draw  = function() {
+            this.getCookie('selected_day');
+            this.getOptions();
+            this.drawDays();
+            var that = this,
+                reset = document.getElementById('reset'),
+                pre = document.getElementsByClassName('pre-button'),
+                next = document.getElementsByClassName('next-button');
+                
+                pre[0].addEventListener('click', function(){that.preMonth(); });
+                next[0].addEventListener('click', function(){that.nextMonth(); });
+                reset.addEventListener('click', function(){that.reset(); });
+            while(daysLen--) {
+                days[daysLen].addEventListener('click', function(){that.clickDay(this); });
+            }
+        };
+        
+        Calendar.prototype.drawHeader = function(e) {
+            var headDay = document.getElementsByClassName('head-day'),
+                headMonth = document.getElementsByClassName('head-month');
+    
+                e?headDay[0].innerHTML = e : headDay[0].innerHTML = day;
+                headMonth[0].innerHTML = year +" - " + monthTag[month];        
+         };
+        
+        Calendar.prototype.drawDays = function() {
+            var startDay = new Date(year, month, 1).getDay(),
+    //      下面表示这个月总共有几天
+                nDays = new Date(year, month + 1, 0).getDate(),
+        
+                n = startDay;
+    //      清除原来的样式和日期
+            for(var k = 0; k <42; k++) {
+                days[k].innerHTML = '';
+                days[k].id = '';
+                days[k].className = '';
+            }
+    
+            for(var i  = 1; i <= nDays ; i++) {
+                days[n].innerHTML = i; 
+                n++;
+            }
+            
+            for(var j = 0; j < 42; j++) {
+                if(days[j].innerHTML === ""){
+                    
+                    days[j].id = "disabled";
+                    
+                }else if(j === day + startDay - 1){
+                    if((this.options && (month === setDate.getMonth()) && (year === setDate.getFullYear())) || (!this.options && (month === today.getMonth())&&(year===today.getFullYear()))){
+                        this.drawHeader(day);
+                        days[j].id = "today";
+                    }
+                }
+                if(selectedDay){
+                    if((j === selectedDay.getDate() + startDay - 1)&&(month === selectedDay.getMonth())&&(year === selectedDay.getFullYear())){
+                    days[j].className = "selected";
+                    this.drawHeader(selectedDay.getDate());
+                    }
+                }
+            }
+        };
+        
+        Calendar.prototype.clickDay = function(o) {
+            var selected = document.getElementsByClassName("selected"),
+                len = selected.length;
+            if(len !== 0){
+                selected[0].className = "";
+            }
+            o.className = "selected";
+            selectedDay = new Date(year, month, o.innerHTML);
+            this.drawHeader(o.innerHTML);
+            this.setCookie('selected_day', 1);
+            
+        };
+        
+        Calendar.prototype.preMonth = function() {
+            if(month < 1){ 
+                month = 11;
+                year = year - 1; 
+            }else{
+                month = month - 1;
+            }
+            this.drawHeader(1);
+            this.drawDays();
+        };
+        
+        Calendar.prototype.nextMonth = function() {
+            if(month >= 11){
+                month = 0;
+                year =  year + 1; 
+            }else{
+                month = month + 1;
+            }
+            this.drawHeader(1);
+            this.drawDays();
+        };
+        
+        Calendar.prototype.getOptions = function() {
+            if(this.options){
+                var sets = this.options.split('-');
+                    setDate = new Date(sets[0], sets[1]-1, sets[2]);
+                    day = setDate.getDate();
+                    year = setDate.getFullYear();
+                    month = setDate.getMonth();
+            }
+        };
+        
+         Calendar.prototype.reset = function() {
+             month = today.getMonth();
+             year = today.getFullYear();
+             day = today.getDate();
+             this.options = undefined;
+             this.drawDays();
+         };
+        
+        Calendar.prototype.setCookie = function(name, expiredays){
+            if(expiredays) {
+                var date = new Date();
+                date.setTime(date.getTime() + (expiredays*24*60*60*1000));
+                var expires = "; expires=" +date.toGMTString();
+            }else{
+                var expires = "";
+            }
+            document.cookie = name + "=" + selectedDay + expires + "; path=/";
+            var b=document.getElementById("selectedday");
+            b.value=selectedDay;
+            document.getElementById("calendarform").submit();
+        };
+        
+        Calendar.prototype.getCookie = function(name) {
+            if(document.cookie.length){
+                var arrCookie  = document.cookie.split(';'),
+                    nameEQ = name + "=";
+                for(var i = 0, cLen = arrCookie.length; i < cLen; i++) {
+                    var c = arrCookie[i];
+                    while (c.charAt(0)==' ') {
+                        c = c.substring(1,c.length);
+                        
+                    }
+                    if (c.indexOf(nameEQ) === 0) {
+                        selectedDay =  new Date(c.substring(nameEQ.length, c.length));
+                    }
+                }
+            }
+        };
+        var calendar = new Calendar();
+        
+            
+    }, false);
 
+
+    
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -290,6 +461,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">캘린더</h6>
                                 </div>
                                 <form id="calendarform" method="POST">
+                                {% csrf_token %}
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="elegant-calencar">
@@ -374,6 +546,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="text" size="1" style="visibility: hidden;" id="selectedday" name="selectedday" value="123">
                         </form>
                         </div>
                         <!-- Area Chart -->
@@ -477,6 +650,8 @@
                     </div>
 
                 </div>
+                <script>
+                </script>
                 <!-- /.container-fluid -->
 
             </div>
@@ -539,7 +714,120 @@
     <!-- Page level custom scripts -->
     <script src="../../../static/javascript/chart-area-demo.js"></script>
     <script src="../../../static/javascript/chart-pie-demo.js"></script>
-    <script src="../../../static/javascript/chart-bar-demo.js"></script>
+    <script>
+        
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
+
+    function number_format(number, decimals, dec_point, thousands_sep) {
+    // *     example: number_format(1234.56, 2, ',', ' ');
+    // *     return: '1 234,56'
+    number = (number + '').replace(',', '').replace(' ', '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function(n, prec) {
+        var k = Math.pow(10, prec);
+        return '' + Math.round(n * k) / k;
+        };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+    }
+    // Bar Chart Example
+    var ctx = document.getElementById("myBarChart");
+    var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+        datasets: [{
+        label: "Revenue",
+        backgroundColor: "#4e73df",
+        hoverBackgroundColor: "#2e59d9",
+        borderColor: "#4e73df",
+        data: ["{{monsum}}","{{tuesum}}","{{wedsum}}","{{thusum}}","{{frisum}}","{{satsum}}","{{sunsum}}"],
+        }],
+    },
+    options: {
+        maintainAspectRatio: false,
+        layout: {
+        padding: {
+            left: 10,
+            right: 25,
+            top: 25,
+            bottom: 0
+        }
+        },
+        scales: {
+        xAxes: [{
+            time: {
+            unit: 'weekend'
+            },
+            gridLines: {
+            display: false,
+            drawBorder: false
+            },
+            ticks: {
+            maxTicksLimit: 6
+            },
+            maxBarThickness: 25,
+        }],
+        yAxes: [{
+            ticks: {
+            min: 0,
+            max: 10000,
+            maxTicksLimit: 6,
+            padding: 10,
+            // Include a dollar sign in the ticks
+            callback: function(value, index, values) {
+                return number_format(value) + 'kcal';
+            }
+            },
+            gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
+            }
+        }],
+        },
+        legend: {
+        display: false
+        },
+        tooltips: {
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+        callbacks: {
+            label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + ':' + number_format(tooltipItem.yLabel) + 'kcal';
+            }
+        }
+        },
+    }
+    });
+
+    </script>
     <script src="../../../static/javascript/calendar.js"></script>
 
 </body>

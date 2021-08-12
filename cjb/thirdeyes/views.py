@@ -5,11 +5,12 @@ from .forms import *
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils import timezone
-from datetime import date
+from datetime import date,datetime, timedelta
 import bcrypt
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import ThirdeyesSerializer
+from django.utils.dateparse import parse_date
 
 # Create your views here.
 
@@ -44,9 +45,71 @@ def login(request):
     return render(request, 'thirdeyes/login.html',{'forms':form})
 
 def main(request):
+    datearray=[]
+    datearray.append(parse_date(request.session['date']).weekday())
+    print(datearray)
+    if(request.method=="POST"):
+        data=request.POST
+        print(data['selectedday'])
+        datearray=data['selectedday'].split()
+
+        if(datearray[1]=="Jan"):
+            mon="01"
+        elif(datearray[1]=="Feb"):
+            mon="02"
+        elif(datearray[1]=="Mar"):
+            mon="03"
+        elif(datearray[1]=="Apr"):
+            mon="04"
+        elif(datearray[1]=="May"):
+            mon="05"
+        elif(datearray[1]=="Jun"):
+            mon="06"
+        elif(datearray[1]=="Jul"):
+            mon="07"
+        elif(datearray[1]=="Aug"):
+            mon="08"
+        elif(datearray[1]=="Sep"):
+            mon="09"
+        elif(datearray[1]=="Oct"):
+            mon="10"
+        elif(datearray[1]=="Nov"):
+            mon="11"
+        elif(datearray[1]=="Dec"):
+            mon="12"
+        day=datearray[2]
+        year=datearray[3]
+        selectedday=year+"-"+mon+"-"+day
+        request.session['date']=selectedday
+
+    if(datearray[0]=="Mon" or datearray[0]==0):
+        dy=0
+    elif(datearray[0]=="Tue" or datearray[0]==1):
+        dy=1
+    elif(datearray[0]=="Wed" or datearray[0]==2):
+        dy=2
+    elif(datearray[0]=="Thu" or datearray[0]==3):
+        dy=3
+    elif(datearray[0]=="Fri" or datearray[0]==4):
+        dy=4
+    elif(datearray[0]=="Sat" or datearray[0]==5):
+        dy=5
+    elif(datearray[0]=="Sun" or datearray[0]==6):
+        dy=6
+    i=7
+    kcalsum=[]
+    while i>0:
+        tmpdt=parse_date(request.session['date'])-timedelta(i+dy-7)
+        tmpFood=UserFood.objects.filter(id=request.session['id'],dt=tmpdt)
+        kcsum=0
+        for food in tmpFood:
+            kcsum+=food.food_kcal*food.food_cnt
+        kcalsum.append(kcsum)
+        i-=1
+    print(kcalsum)
+    
+    
     requestId=request.session['id']
-    dt=date.today()
-    dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
     mUrl=""
     lUrl=""
     dUrl=""
@@ -70,22 +133,24 @@ def main(request):
         dsum=0
         ssum=0
         sum=0
-        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=1)
+        get=UserFood.objects.filter(id=requestId,dt=request.session['date'],meal_type=1)
         for a in get:
             msum+=a.food_kcal*a.food_cnt
-        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=2)
+        get=UserFood.objects.filter(id=requestId,dt=request.session['date'],meal_type=2)
         for a in get:
             lsum+=a.food_kcal*a.food_cnt
-        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=3)
+        get=UserFood.objects.filter(id=requestId,dt=request.session['date'],meal_type=3)
         for a in get:
             dsum+=a.food_kcal*a.food_cnt
-        get=UserFood.objects.filter(id=requestId,dt=dt2,meal_type=4)
+        get=UserFood.objects.filter(id=requestId,dt=request.session['date'],meal_type=4)
         for a in get:
             ssum+=a.food_kcal*a.food_cnt
         sum=msum+lsum+dsum+ssum
         if getUser.gender==1:
             value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
-        return render(request, 'thirdeyes/main.html',{'content':value, 'eats':get, 'sum':sum, 'username':UserTb.objects.get(email=request.session['id']).nm,'mUrl':mUrl, 'lUrl':lUrl,'dUrl':dUrl,'sUrl':sUrl,'msum':msum,'lsum':lsum,'dsum':dsum,'ssum':ssum})
+        dtsplit=request.session['date'].split("-")
+        print(kcalsum[0])
+        return render(request, 'thirdeyes/main.html',{'content':value, 'eats':get, 'sum':sum, 'username':UserTb.objects.get(email=request.session['id']).nm,'mUrl':mUrl, 'lUrl':lUrl,'dUrl':dUrl,'sUrl':sUrl,'msum':msum,'lsum':lsum,'dsum':dsum,'ssum':ssum,'month':str(int(dtsplit[1])-1),'day':dtsplit[2],'year':dtsplit[0],'monsum':kcalsum[0],'tuesum':kcalsum[1],'wedsum':kcalsum[2],'thusum':kcalsum[3],'frisum':kcalsum[4],'satsum':kcalsum[5],'sunsum':kcalsum[6]})
     return render(request, 'thirdeyes/main.html') 
 
 def set(request):

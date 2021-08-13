@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>d</title>
+    <script>
+        function onbutton(){
+            var a=document.getElementById("selected");
+            var form=document.getElementById("form");
+            var b=document.getElementById("exercise");
+            a.value=b.value;
+			var c=b.options[b.selectedIndex].innerHTML;
+			var d=document.getElementById("act_name");
+			d.value=c;
+            form.submit();
+        }
+    </script>
+</head>
+<body>
+	<form class="well well-large" method="post" id="form">
+        {% csrf_token %}
+		<div>
+			<div id="table_calculator">
+				<table cellspacing="2" cellpadding="4" border="0" class="tablaFormulario">
+					<tbody>
+						<tr>
+							<td>
+								<span class="items_trainers2">활동을 선택하세요.</span>
+							</td>
+							<td>
+								<select size="1" name="exercise" id="exercise">
+									<option value="3.0">볼링</option>
+									<option value="3.0">윈드서핑</option>
+									<option value="3.0">필라테스</option>
+									<option value="3.0">요가</option>
+									<option value="3.5">체조</option>
+									<option value="3.5">골프</option>
+									<option value="4.0">자전거타기</option>
+									<option value="4.0">탁구</option>
+									<option value="4.0">배구</option>
+									<option value="4.0">아쿠아로빅</option>
+									<option value="4.0">야구</option>
+									<option value="5.0">스노클링</option>
+									<option value="5.5">승마</option>
+									<option value="6.0">헬스</option>
+									<option value="6.0">하이킹</option>
+									<option value="6.0">스키</option>
+									<option value="6.0">수영</option>
+									<option value="6.0">복싱</option>
+									<option value="7.0">배드민턴</option>
+									<option value="7.0">농구</option>
+									<option value="7.0">스케이팅</option>
+									<option value="7.0">축구</option>
+									<option value="7.0">스쿠버다이빙</option>
+									<option value="7.0">죠깅</option>
+									<option value="7.0">테니스</option>
+									<option value="8.0">등산</option>
+									<option value="8.0">달리기</option>
+									<option value="8.0">미식축구</option>
+									<option value="8.0">암벽등반</option>
+									<option value="8.0">아이스하키</option>
+									<option value="10.0">줄넘기</option>
+									<option value="10.0">킥복싱</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span class="items_trainers2">운동한 시간을 입력하세요.</span>
+							</td>
+							<td>
+								<div class="input-append">
+									<input name="minutes" class="span1" id="appendedInput">
+									<span class="add-on">분</span>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="botonera2">
+			<button class="" type="button" onclick="onbutton()">입력</button>
+		</div>
+		<div class="clear">
+
+		</div>
+		<div class="alert alert-info" style="text-align: center; margin-top: 20px;">
+			<span id="Caltext">
+				"소비된 칼로리는 {{kcal}}kcal"
+				<h4 style="font-size: 3rem;">
+					<label id="calories"> </label>
+				</h4>
+			</span>
+		</div>
+        <input type="text" id="selected" style="visibility: hidden;" name="selected">
+        <input type="text" id="act_name" style="visibility: hidden;" name="act_name">
+	</form>
+</body>
+</html>

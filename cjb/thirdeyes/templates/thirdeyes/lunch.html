@@ -41,6 +41,15 @@
     <!-- Custom styles for this template-->
     <link href="../../../static/CSS/sb-admin-2.min.css" rel="stylesheet">
 
+    <script>
+        function del(){
+            var form=document.getElementById("form");
+            var image_del=document.getElementById("image_del");
+            image_del.value="del";
+            form.submit();
+        }
+
+    </script>
 </head>
 
 <body id="page-top">
@@ -107,7 +116,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="container">
-                        <form method="POST" enctype="multipart/form-data">
+                        <form method="POST" enctype="multipart/form-data" id="form">
                             {% csrf_token %}
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -152,6 +161,7 @@
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3">
                                             <h6 class="m-0 font-weight-bold text-primary">사진</h6>
+                                            <button type="button" onclick="del()">삭제</button>
                                         </div>
                                         <div class="card-body">
                                             <div class="text-center">
@@ -159,6 +169,7 @@
                                                     src="{{img}}" alt="...">
                                             </div>
                                             <input id="imgupload" type="file" name="image_field" style="visibility: hidden;" size="1">
+                                            <input id="image_del" type="text" name="image_del" style="visibility: hidden;" size="1">
                                         </div>
                                     </div>
 

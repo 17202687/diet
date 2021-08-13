@@ -34,3 +34,9 @@ class foodImageForm(forms.Form):
   dt=forms.DateField()
   meal_type=forms.IntegerField()
   image_field=forms.ImageField()
+
+
+class userActivityForm(forms.ModelForm):
+  class Meta:
+    model = UserActivity
+    fields = ["user_no", "id", "dt", "act_name", "act_met", "act_time","act_kcal"]

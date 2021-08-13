@@ -200,6 +200,9 @@
     width: 40px;
     font-size: 1em;
 }
+.p_num{
+    size: 1px;
+}
 
 .search , .save {
     background-color: #383838;

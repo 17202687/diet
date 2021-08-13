@@ -98,15 +98,23 @@ def main(request):
         dy=6
     i=7
     kcalsum=[]
+    actkcal=[]
     while i>0:
         tmpdt=parse_date(request.session['date'])-timedelta(i+dy-7)
         tmpFood=UserFood.objects.filter(id=request.session['id'],dt=tmpdt)
+        tmpAct=UserActivity.objects.filter(id=request.session['id'],dt=tmpdt)
         kcsum=0
         for food in tmpFood:
             kcsum+=food.food_kcal*food.food_cnt
         kcalsum.append(kcsum)
+
+        actkc=0
+        for act in tmpAct:
+            actkc+=float(act.act_kcal)
+        actkcal.append(actkc)
         i-=1
     print(kcalsum)
+    print(actkcal)
     
     
     requestId=request.session['id']
@@ -150,7 +158,7 @@ def main(request):
             value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
         dtsplit=request.session['date'].split("-")
         print(kcalsum[0])
-        return render(request, 'thirdeyes/main.html',{'content':value, 'eats':get, 'sum':sum, 'username':UserTb.objects.get(email=request.session['id']).nm,'mUrl':mUrl, 'lUrl':lUrl,'dUrl':dUrl,'sUrl':sUrl,'msum':msum,'lsum':lsum,'dsum':dsum,'ssum':ssum,'month':str(int(dtsplit[1])-1),'day':dtsplit[2],'year':dtsplit[0],'monsum':kcalsum[0],'tuesum':kcalsum[1],'wedsum':kcalsum[2],'thusum':kcalsum[3],'frisum':kcalsum[4],'satsum':kcalsum[5],'sunsum':kcalsum[6]})
+        return render(request, 'thirdeyes/main.html',{'content':value, 'monact':actkcal[0],'tueact':actkcal[1],'wedact':actkcal[2],'thuact':actkcal[3],'friact':actkcal[4],'satact':actkcal[5],'sunact':actkcal[6],'eats':get, 'sum':sum, 'username':UserTb.objects.get(email=request.session['id']).nm,'mUrl':mUrl, 'lUrl':lUrl,'dUrl':dUrl,'sUrl':sUrl,'msum':msum,'lsum':lsum,'dsum':dsum,'ssum':ssum,'month':str(int(dtsplit[1])-1),'day':dtsplit[2],'year':dtsplit[0],'monsum':kcalsum[0],'tuesum':kcalsum[1],'wedsum':kcalsum[2],'thusum':kcalsum[3],'frisum':kcalsum[4],'satsum':kcalsum[5],'sunsum':kcalsum[6]})
     return render(request, 'thirdeyes/main.html') 
 
 def set(request):
@@ -239,6 +247,9 @@ def lunch(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
+            if request.POST['image_del']=="del":
+                delFood=FoodImage.objects.filter(id=request.session['id'],meal_type=2,dt=request.session['date'])
+                delFood.delete()
             try:
                 img=request.FILES["image_field"]
             except:
@@ -271,6 +282,9 @@ def dinner(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
+            if request.POST['image_del']=="del":
+                delFood=FoodImage.objects.filter(id=request.session['id'],meal_type=3,dt=request.session['date'])
+                delFood.delete()
             try:
                 img=request.FILES["image_field"]
             except:
@@ -304,10 +318,13 @@ def morning(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
+            if request.POST['image_del']=="del":
+                delFood=FoodImage.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date'])
+                delFood.delete()
             try:
                 img=request.FILES["image_field"]
             except:
-                return redirect('/main/')
+                return redirect('/main/morning')
             if(FoodImage.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date']).exists()):
                 obj=FoodImage.objects.get(id=request.session['id'],meal_type=1,dt=request.session['date'])
                 obj.img=img
@@ -336,6 +353,9 @@ def snack(request):
     if request.method=="POST":
         form=foodImageForm(request.POST, request.FILES)
         if form.is_valid:
+            if request.POST['image_del']=="del":
+                delFood=FoodImage.objects.filter(id=request.session['id'],meal_type=4,dt=request.session['date'])
+                delFood.delete()
             try:
                 img=request.FILES["image_field"]
             except:
@@ -564,6 +584,46 @@ def sfoodedit(request):
         amount+=1
     return render(request, 'thirdeyes/mfoodedit.html',{'foods':getFood,'sum':sum,'kcal':kcal,'cnt':cnt,'amount':amount})
 
+def activity(request):
+    if request.method=="POST":
+        data=request.POST
+        kcal=float(data['selected'])*float(data['minutes'])*UserInfo.objects.get(user_id=request.session['id']).weight*3.5*0.005
+        UserActivity.objects.create(
+            id=request.session['id'],
+            dt=request.session['date'],
+            act_name=data['act_name'],
+            act_met=float(data['selected']),
+            act_time=data['minutes'],
+            act_kcal=kcal
+        )
+        return render(request, 'thirdeyes/activity.html',{'kcal':kcal})
+
+    return render(request, 'thirdeyes/activity.html',{'kcal':0})
+
+def activityedit(request):
+    getAct=UserActivity.objects.filter(id=request.session['id'],dt=request.session['date'])
+    if request.method=="POST":
+        data=request.POST
+        getAct.delete()
+        i=0
+        while i<len(data.getlist('act_name')):
+            tmpName=data.getlist('act_name')[i]
+            if(tmpName==""):
+                break
+            tmpTime=data.getlist('act_time')[i]
+            tmpMet=data.getlist('act_met')[i]
+            print(tmpName, tmpTime, tmpMet)
+            UserActivity.objects.create(
+                id=request.session['id'],
+                dt=request.session['date'],
+                act_name=tmpName,
+                act_met=tmpMet,
+                act_time=tmpTime,
+                act_kcal=float(tmpMet)*float(tmpTime)*UserInfo.objects.get(user_id=request.session['id']).weight*3.5*0.005
+            )
+            i+=1
+
+    return render(request,'thirdeyes/activityedit.html', {'getAct':getAct})
 # Create your views here. 
 
 class ThirdeyesListAPI(APIView):

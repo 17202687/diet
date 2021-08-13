@@ -77,3 +77,16 @@ class FoodImage(models.Model):
     class Meta:
         managed = False
         db_table = 'food_image'
+
+class UserActivity(models.Model):
+    user_no = models.AutoField(primary_key=True)
+    id = models.CharField(max_length=20, blank=True, null=True)
+    dt = models.DateField(blank=True, null=True)
+    act_name = models.CharField(max_length=20, blank=True, null=True)
+    act_met = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
+    act_time = models.IntegerField(blank=True, null=True)
+    act_kcal = models.DecimalField(max_digits=10, decimal_places=5, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'user_activity'

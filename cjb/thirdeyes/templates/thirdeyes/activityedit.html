@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>활동량 수정</title>
+        <script>
+            function formsubmit(){
+                var form=document.getElementById("form");
+                var act_name=document.getElementsByClassName("act_name");
+                var act_time=document.getElementsByClassName("act_time");
+                var act_met=document.getElementsByClassName("act_met");
+
+                var name=document.getElementsByClassName("name");
+                var time=document.getElementsByClassName("time");
+                var met=document.getElementsByClassName("met");
+                for(var i=0;i<name.length;++i){
+                    act_name.item(i).value=name.item(i).innerHTML;
+                    act_time.item(i).value=time.item(i).value;
+                    act_met.item(i).value=met.item(i).innerHTML;
+                }
+                form.submit();
+            }
+        </script>
+    </head>
+    <body>
+        <form id="form" method="post">
+        {% csrf_token %}
+        <table id="tb">
+            {% for act in getAct %}
+            <tr id="rows">
+                <td>
+                    <span class="name">{{act.act_name}}</span>
+                </td>
+                <td>
+                    <input class="time" type="text" value="{{act.act_time}}">분
+                </td>
+                <td>
+                    <button type="button" onclick="delRow(this)">삭제</button>
+                </td>
+                <td>
+                    <span class="met" style="visibility: hidden;">{{act.act_met}}</span>
+                </td>
+            </tr>
+            <input type="text" size="1" style="visibility: hidden;" class="act_name" name="act_name">
+            <input type="text" size="1" style="visibility: hidden;" class="act_time" name="act_time">
+            <input type="text" size="1" style="visibility: hidden;" class="act_met" name="act_met">
+            {% endfor %}
+        </table>
+        <br>
+        <button type="button" onclick="formsubmit()">저장</button>
+    </form>
+    <script>
+        function delRow(x){
+                var a=(x.parentNode.parentNode);
+                a.parentNode.removeChild(a);
+            }
+    </script>
+    </body>
+</html>

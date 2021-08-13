@@ -30,6 +30,8 @@ urlpatterns = [
     path('main/lunch/lfoodedit', views.lfoodedit, name='lfoodedit'),
     path('main/dinner/dfoodedit', views.dfoodedit, name='dfoodedit'),
     path('main/snack/sfoodedit', views.sfoodedit, name='sfoodedit'),
+    path('main/activity', views.activity, name='activity'),
+    path('main/activity/activityedit', views.activityedit, name='activityedit'),
     path('admin/', admin.site.urls), path('api/thirdeyes/', ThirdeyesListAPI.as_view()),
     #path('checks/', include('checks.urls')),
     #path('rest-auth/', include('rest_auth.urls')),

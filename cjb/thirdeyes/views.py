@@ -15,6 +15,14 @@ from django.utils.dateparse import parse_date
 # Create your views here.
 
 def login(request):
+    try:
+        if(request.session['autologin']==1 and request.session['id']!=""):
+            dt=date.today()
+            dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
+            request.session['date']=dt2
+            return redirect('main/')
+    except:
+        a="1"
     if request.method=="POST":
         form = LoginForm(request.POST)
         data=request.POST
@@ -28,6 +36,11 @@ def login(request):
             #if(getUser.pw == inputPw):
             if(bcrypt.checkpw(inputPw.encode('utf-8'),getUser.pw.encode('utf-8'))):
                 #로그인 성공
+                try:
+                    data['autologin']
+                    request.session['autologin']=1
+                except:
+                    request.session['autologin']=0
                 dt=date.today()
                 dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
                 request.session['date']=dt2
@@ -50,6 +63,9 @@ def main(request):
     print(datearray)
     if(request.method=="POST"):
         data=request.POST
+        if(data['logout']=="1"):
+            request.session['id']=""
+            return redirect('/')
         print(data['selectedday'])
         datearray=data['selectedday'].split()
 

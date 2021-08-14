@@ -547,6 +547,7 @@
                                 </div>
                             </div>
                             <input type="text" size="1" style="visibility: hidden;" id="selectedday" name="selectedday" value="123">
+                            <input type="text" size="1" style="visibility: hidden;" id="logout" name="logout" value="0">
                         </form>
                         </div>
                         <!-- Area Chart -->
@@ -698,7 +699,15 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" onclick="logout()">Logout</a>
+                    <script>
+                        function logout(){
+                            var a=document.getElementById("calendarform");
+                            var b=document.getElementById("logout");
+                            b.value="1";
+                            a.submit();
+                        }
+                    </script>
                 </div>
             </div>
         </div>

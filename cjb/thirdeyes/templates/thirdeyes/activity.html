@@ -1,99 +1,288 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>d</title>
-    <script>
-        function onbutton(){
-            var a=document.getElementById("selected");
-            var form=document.getElementById("form");
-            var b=document.getElementById("exercise");
-            a.value=b.value;
-			var c=b.options[b.selectedIndex].innerHTML;
-			var d=document.getElementById("act_name");
-			d.value=c;
-            form.submit();
-        }
-    </script>
-</head>
-<body>
-	<form class="well well-large" method="post" id="form">
-        {% csrf_token %}
-		<div>
-			<div id="table_calculator">
-				<table cellspacing="2" cellpadding="4" border="0" class="tablaFormulario">
-					<tbody>
-						<tr>
-							<td>
-								<span class="items_trainers2">활동을 선택하세요.</span>
-							</td>
-							<td>
-								<select size="1" name="exercise" id="exercise">
-									<option value="3.0">볼링</option>
-									<option value="3.0">윈드서핑</option>
-									<option value="3.0">필라테스</option>
-									<option value="3.0">요가</option>
-									<option value="3.5">체조</option>
-									<option value="3.5">골프</option>
-									<option value="4.0">자전거타기</option>
-									<option value="4.0">탁구</option>
-									<option value="4.0">배구</option>
-									<option value="4.0">아쿠아로빅</option>
-									<option value="4.0">야구</option>
-									<option value="5.0">스노클링</option>
-									<option value="5.5">승마</option>
-									<option value="6.0">헬스</option>
-									<option value="6.0">하이킹</option>
-									<option value="6.0">스키</option>
-									<option value="6.0">수영</option>
-									<option value="6.0">복싱</option>
-									<option value="7.0">배드민턴</option>
-									<option value="7.0">농구</option>
-									<option value="7.0">스케이팅</option>
-									<option value="7.0">축구</option>
-									<option value="7.0">스쿠버다이빙</option>
-									<option value="7.0">죠깅</option>
-									<option value="7.0">테니스</option>
-									<option value="8.0">등산</option>
-									<option value="8.0">달리기</option>
-									<option value="8.0">미식축구</option>
-									<option value="8.0">암벽등반</option>
-									<option value="8.0">아이스하키</option>
-									<option value="10.0">줄넘기</option>
-									<option value="10.0">킥복싱</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span class="items_trainers2">운동한 시간을 입력하세요.</span>
-							</td>
-							<td>
-								<div class="input-append">
-									<input name="minutes" class="span1" id="appendedInput">
-									<span class="add-on">분</span>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="botonera2">
-			<button class="" type="button" onclick="onbutton()">입력</button>
-		</div>
-		<div class="clear">
+<html lang="en">
 
-		</div>
-		<div class="alert alert-info" style="text-align: center; margin-top: 20px;">
-			<span id="Caltext">
-				"소비된 칼로리는 {{kcal}}kcal"
-				<h4 style="font-size: 3rem;">
-					<label id="calories"> </label>
-				</h4>
-			</span>
-		</div>
-        <input type="text" id="selected" style="visibility: hidden;" name="selected">
-        <input type="text" id="act_name" style="visibility: hidden;" name="act_name">
-	</form>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Dashboard</title>
+
+    <style>
+      .searchBox {
+        margin: 20px 0;
+      }
+
+      .listBox {
+        max-width: 500px;
+      }
+
+      .listInner {
+        background-color: #dedede;
+        margin: 10px 5px;
+        padding: 4px;
+      }
+
+      .country {
+        font-weight: bold;
+      }
+
+    </style>
+
+    <link href="../../../static/CSS/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../../static/CSS/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" href="../../static/CSS/activity.css" />
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Topbar Search -->
+                    <div><h3><a class="dropdown-item" href="/main">천진반</a></h3></div>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        
+
+                        
+
+                        
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{username}}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="../../../static/images/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    프로필
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    설정
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">활동량</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Content Column -->
+                        <div class="col-lg-6 mb-4">
+
+                            <div class="card shadow mb-4">
+        
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6></h6>
+									<a class="bi bi-pencil-fill" href="activityedit" role="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                        </svg>
+                                    </a>
+                                    <script src="https://kit.fontawesome.com/8118e973b8.js" crossorigin="anonymous"></script>
+                                </div>
+                                <div class="card-body">
+                                    <form class="well well-large" method="post" id="form">
+                                        {% csrf_token %}
+                                        <div>
+                                            <div id="table_calculator">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <p class="items_trainers2">활동을 선택하세요.</p>
+                                                            </td>
+                                                            <td>
+                                                                <select size="1" name="exercise" id="exercise">
+                                                                    <option value="3.0">볼링</option>
+                                                                    <option value="3.0">윈드서핑</option>
+                                                                    <option value="3.0">필라테스</option>
+                                                                    <option value="3.0">요가</option>
+                                                                    <option value="3.5">체조</option>
+                                                                    <option value="3.5">골프</option>
+                                                                    <option value="4.0">자전거타기</option>
+                                                                    <option value="4.0">탁구</option>
+                                                                    <option value="4.0">배구</option>
+                                                                    <option value="4.0">아쿠아로빅</option>
+                                                                    <option value="4.0">야구</option>
+                                                                    <option value="5.0">스노클링</option>
+                                                                    <option value="5.5">승마</option>
+                                                                    <option value="6.0">헬스</option>
+                                                                    <option value="6.0">하이킹</option>
+                                                                    <option value="6.0">스키</option>
+                                                                    <option value="6.0">수영</option>
+                                                                    <option value="6.0">복싱</option>
+                                                                    <option value="7.0">배드민턴</option>
+                                                                    <option value="7.0">농구</option>
+                                                                    <option value="7.0">스케이팅</option>
+                                                                    <option value="7.0">축구</option>
+                                                                    <option value="7.0">스쿠버다이빙</option>
+                                                                    <option value="7.0">죠깅</option>
+                                                                    <option value="7.0">테니스</option>
+                                                                    <option value="8.0">등산</option>
+                                                                    <option value="8.0">달리기</option>
+                                                                    <option value="8.0">미식축구</option>
+                                                                    <option value="8.0">암벽등반</option>
+                                                                    <option value="8.0">아이스하키</option>
+                                                                    <option value="10.0">줄넘기</option>
+                                                                    <option value="10.0">킥복싱</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p class="items_trainers2">운동한 시간을 입력하세요.</p>
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-append">
+                                                                    <input name="minutes" class="span1" id="appendedInput">
+                                                                    분
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="botonera2">
+                                            <button class="" type="button" onclick="onbutton()">입력</button>
+                                        </div>
+                                        <div class="clear">
+
+                                        </div>
+                                        <div class="alert alert-info" style="text-align: left; margin-top: 20px;">
+                                            <span id="Caltext">
+                                                총 소비된 칼로리 = {{kcal}}kcal
+                                                <h4 style="font-size: 3rem;">
+                                                    <label id="calories"> </label>
+                                                </h4>
+                                            </span>
+                                        </div>
+                                        <input type="text" id="selected" style="visibility: hidden;" name="selected">
+                                        <input type="text" id="act_name" style="visibility: hidden;" name="act_name">
+                                    </form>
+                                
+                                </div>
+                            </div>
+
+                        </div>
+
+                </div>
+                <script>
+                    function onbutton(){
+                        var a=document.getElementById("selected");
+                        var form=document.getElementById("form");
+                        var b=document.getElementById("exercise");
+                        a.value=b.value;
+                        var c=b.options[b.selectedIndex].innerHTML;
+                        var d=document.getElementById("act_name");
+                        d.value=c;
+                        form.submit();
+                    }
+                </script>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
 </body>
+
 </html>

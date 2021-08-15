@@ -60,13 +60,11 @@ def login(request):
 def main(request):
     datearray=[]
     datearray.append(parse_date(request.session['date']).weekday())
-    print(datearray)
     if(request.method=="POST"):
         data=request.POST
         if(data['logout']=="1"):
             request.session['id']=""
             return redirect('/')
-        print(data['selectedday'])
         datearray=data['selectedday'].split()
 
         if(datearray[1]=="Jan"):
@@ -129,10 +127,6 @@ def main(request):
             actkc+=float(act.act_kcal)
         actkcal.append(actkc)
         i-=1
-    print(kcalsum)
-    print(actkcal)
-    
-    
     requestId=request.session['id']
     mUrl=""
     lUrl=""
@@ -173,8 +167,11 @@ def main(request):
         if getUser.gender==1:
             value=((13.7516*getUser.weight)+(5.0033*getUser.height)-(6.7550*getUser.age)+66.4730)*(1+(float(getUser.activity)))
         dtsplit=request.session['date'].split("-")
-        print(kcalsum[0])
-        return render(request, 'thirdeyes/main.html',{'content':value, 'monact':actkcal[0],'tueact':actkcal[1],'wedact':actkcal[2],'thuact':actkcal[3],'friact':actkcal[4],'satact':actkcal[5],'sunact':actkcal[6],'eats':get, 'sum':sum, 'username':UserTb.objects.get(email=request.session['id']).nm,'mUrl':mUrl, 'lUrl':lUrl,'dUrl':dUrl,'sUrl':sUrl,'msum':msum,'lsum':lsum,'dsum':dsum,'ssum':ssum,'month':str(int(dtsplit[1])-1),'day':dtsplit[2],'year':dtsplit[0],'monsum':kcalsum[0],'tuesum':kcalsum[1],'wedsum':kcalsum[2],'thusum':kcalsum[3],'frisum':kcalsum[4],'satsum':kcalsum[5],'sunsum':kcalsum[6]})
+        getAct=UserActivity.objects.filter(id=request.session['id'],dt=request.session['date'])
+        actsum=0
+        for act in getAct:
+            actsum+=act.act_kcal
+        return render(request, 'thirdeyes/main.html',{'content':value,'actsum':actsum, 'monact':actkcal[0],'tueact':actkcal[1],'wedact':actkcal[2],'thuact':actkcal[3],'friact':actkcal[4],'satact':actkcal[5],'sunact':actkcal[6],'eats':get, 'sum':sum, 'username':UserTb.objects.get(email=request.session['id']).nm,'mUrl':mUrl, 'lUrl':lUrl,'dUrl':dUrl,'sUrl':sUrl,'msum':msum,'lsum':lsum,'dsum':dsum,'ssum':ssum,'month':str(int(dtsplit[1])-1),'day':dtsplit[2],'year':dtsplit[0],'monsum':kcalsum[0],'tuesum':kcalsum[1],'wedsum':kcalsum[2],'thusum':kcalsum[3],'frisum':kcalsum[4],'satsum':kcalsum[5],'sunsum':kcalsum[6]})
     return render(request, 'thirdeyes/main.html') 
 
 def set(request):
@@ -601,6 +598,11 @@ def sfoodedit(request):
     return render(request, 'thirdeyes/mfoodedit.html',{'foods':getFood,'sum':sum,'kcal':kcal,'cnt':cnt,'amount':amount})
 
 def activity(request):
+    getAct=UserActivity.objects.filter(id=request.session['id'],dt=request.session['date'])
+    sumkcal=0
+    for act in getAct:
+        print(act)
+        sumkcal+=act.act_kcal
     if request.method=="POST":
         data=request.POST
         kcal=float(data['selected'])*float(data['minutes'])*UserInfo.objects.get(user_id=request.session['id']).weight*3.5*0.005
@@ -612,9 +614,14 @@ def activity(request):
             act_time=data['minutes'],
             act_kcal=kcal
         )
-        return render(request, 'thirdeyes/activity.html',{'kcal':kcal})
+        getAct=UserActivity.objects.filter(id=request.session['id'],dt=request.session['date'])
+        sumkcal=0
+        for act in getAct:
+            print(act)
+            sumkcal+=act.act_kcal
+        return render(request, 'thirdeyes/activity.html',{'kcal':kcal, 'sumkcal':sumkcal})
 
-    return render(request, 'thirdeyes/activity.html',{'kcal':0})
+    return render(request, 'thirdeyes/activity.html',{'kcal':0,'sumkcal':sumkcal})
 
 def activityedit(request):
     getAct=UserActivity.objects.filter(id=request.session['id'],dt=request.session['date'])

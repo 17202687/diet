@@ -67,7 +67,7 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Topbar Search -->
-                    <div><h3>천진반</h3></div>
+                    <div><h3><a class="dropdown-item" href="/main">천진반</a></h3></div>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -85,23 +85,19 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{username}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="../../../static/images/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    프로필
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                <button type="submit" class="btn btn-primary btn-user btn-block dropdown-item" onclick="location.href='/main/set/user/'">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    설정
-                                </a>
+                                    프로필 설정
+                                </button>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="/" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -131,7 +127,7 @@
 
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <ul>
+                                    <ul class= "navbar-nav ml-auto">
                                         <li class="nav-item dropdown no-arrow">
                                             <a class="fas fa-search" href="msearch" role="button" style="float: right; padding: .5rem 1rem;"></a>
 
@@ -151,6 +147,7 @@
                                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                                 앨범
                                             </a>
+                                            </div>
                                         </li>
                                     </ul>
                                     <script src="https://kit.fontawesome.com/8118e973b8.js" crossorigin="anonymous"></script>
@@ -161,7 +158,12 @@
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                             <h6 class="m-0 font-weight-bold text-primary">사진</h6>
-                                            <button type="button" onclick="del()">삭제</button>
+                                            <button type="button" class="bi bi-trash btn btn-link d-md-none rounded-circle" onclick="del()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                            </svg>
+                                            </button>
                                         </div>
                                         <div class="card-body">
                                             <div class="text-center">
@@ -175,8 +177,7 @@
 
                                     <!-- Illustrations -->
                                     <div class="card shadow mb-4">
-                                        <div
-                                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                             <h6 class="m-0 font-weight-bold text-primary">음식/kcal</h6>
                                             <a class="bi bi-pencil-fill" href="mfoodedit" role="button">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">

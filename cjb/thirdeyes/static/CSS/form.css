@@ -1,0 +1,167 @@
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div
+{
+    font-size: 2vw;
+}
+
+.abcspan
+{
+    display: inline-block; width: 15px; height: 10px;
+}
+
+.basketdiv 
+{
+    width: 100%;
+    border-top: 1px solid #e0e0e0;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.basketdiv .row.head 
+{
+    border-bottom: 2px solid #888;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    font-weight: 500;
+}
+
+.basketdiv .data 
+{
+    border-bottom: 1px dashed #888;
+    box-sizing: border-box;
+    cursor: pointer;
+    float: left;
+    width: 107%;
+}
+
+.basketdiv .data .empty
+{
+    text-align: center;
+    padding: 12px 0;
+}
+   
+.basketdiv .row.head .subdiv 
+{
+    background-color: #f4f4f4;
+}
+
+.basketdiv .row > .subdiv 
+{
+    display: block;
+    float: left;
+}
+
+.basketdiv .row > .subdiv:nth-child(1) 
+{
+    width: 30%;
+}
+
+.basketdiv .row > .subdiv:nth-child(2) 
+{
+    width: 55%;
+}
+
+.basketdiv .row > .subdiv:nth-child(3) 
+{
+    width: 15%;
+}
+
+.basketdiv2 .row > .subdiv:nth-child(1) 
+{
+    width: 60%;
+}
+
+.basketdiv2 .row > .subdiv:nth-child(2) 
+{
+    width: 40%;
+}
+
+.basketdiv .row > div > div 
+{
+    display: block;
+    float: left;
+    text-align: center;
+    margin: 0;
+    padding: 12px 0;
+}
+
+
+
+.basketdiv .data .num .updown 
+{
+    color: #0075ff;
+    
+    letter-spacing: -5px;
+}
+
+.basketdiv .check input[type=checkbox] 
+{
+    transform: scale(1.5);
+}
+
+.basketdiv .check 
+{
+    width: 25%;
+}
+
+.basketdiv .pname
+{
+    width: 75%;
+}
+
+.basketdiv .basketprice 
+{
+    width: 33%;
+}
+
+.basketdiv .num 
+{
+    width: 34%;
+}
+
+.basketdiv .sum 
+{
+    width: 33%;
+    color: #0000aa;
+}
+
+.basketdiv .basketcmd
+{
+    width: 100%;
+}
+
+
+
+.baseform > tbody > tr > td:first-child 
+{
+    width: 100px;
+}
+
+.abutton, .abutton:link, .abutton:visited, .abutton:active, input[type=button] 
+{
+   
+    cursor: pointer;
+    letter-spacing: -1px;
+    padding: 0px 0px;
+    margin: 0px 0px;
+    width: auto;
+    word-break: keep-all;
+    border-radius: 5px;
+    text-decoration: none;
+    
+}
+
+.abutton-alt 
+{
+    background-color: #d3e2c6;
+}
+
+.basketrowcmd, .sumcount, .summoney
+{
+  text-align: right;
+  margin-bottom: 10px;
+}

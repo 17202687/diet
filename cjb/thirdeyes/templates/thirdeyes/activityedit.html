@@ -161,9 +161,9 @@
                                             var name=document.getElementsByClassName("name");
                                             var time=document.getElementsByClassName("time");
                                             var met=document.getElementsByClassName("met");
-                                            for(var i=0;i<name.length;++i){
-                                                act_name.item(i).value=name.item(i).innerHTML;
-                                                act_time.item(i).value=time.item(i).value;
+                                            for(var i=0;i<name.length-1;++i){
+                                                act_name.item(i).value=name.item(i+1).innerHTML;
+                                                act_time.item(i).value=time.item(i+1).value;
                                                 act_met.item(i).value=met.item(i).innerHTML;
                                             }
                                             form.submit();

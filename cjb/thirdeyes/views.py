@@ -645,6 +645,7 @@ def activityedit(request):
                 act_kcal=float(tmpMet)*float(tmpTime)*UserInfo.objects.get(user_id=request.session['id']).weight*3.5*0.005
             )
             i+=1
+        return redirect('/main/activity/')
 
     return render(request,'thirdeyes/activityedit.html', {'getAct':getAct})
 # Create your views here. 

@@ -109,7 +109,6 @@
                                     <form id="form" method="post">
                                         {% csrf_token %}
                                         <table id="tb" class="basketdiv">
-                                            {% for act in getAct %}
                                             <tr class="head">
                                                 <td style="width: 30%;">
                                                     <span class="name">운동</span>
@@ -121,6 +120,7 @@
                                                     <span class="cmd">삭제</span>
                                                 </td>
                                             </tr>
+                                            {% for act in getAct %}
                                             <tr id="rows" class="data">
                                                 <td style="width: 30%;">
                                                     <span class="name">{{act.act_name}}</span>

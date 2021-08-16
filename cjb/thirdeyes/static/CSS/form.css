@@ -91,7 +91,7 @@ div
 
 
 
-.basketdiv .data .num .updown 
+.basketdiv .data .pnum .updown 
 {
     color: #0075ff;
     
@@ -118,7 +118,7 @@ div
     width: 33%;
 }
 
-.basketdiv .num 
+.basketdiv .pnum 
 {
     width: 34%;
 }

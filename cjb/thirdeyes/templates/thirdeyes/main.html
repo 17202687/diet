@@ -290,11 +290,11 @@
                                         sum='{{sum}}'
                                         //document.write(sum);
 
-                                        var progress = sum / "{{content}}"
+                                        var progress = (sum - "{{actsum}}") / "{{content}}"
                                         var dashoffset = CIRCUMFERENCE * (1 - progress);
                         
                                         //value.innerHTML=per +'%';
-                                        value.innerHTML= Math.round("{{content}}" - sum) 
+                                        value.innerHTML= Math.round("{{content}}" + "{{actsum}}" - sum ) 
 
                                         bar.style.strokeDashoffset = dashoffset;
                                         bar.style.strokeDasharray = CIRCUMFERENCE;
@@ -303,9 +303,13 @@
                                     <div class="mt-4 text-center">
                                         <span class="mr-2">
                                             <i class="fas fa-circle text-success"></i> 섭취칼로리
+                                            <br>
+                                            {{sum}}
                                         </span>
                                         <span class="mr-2">
                                         <i class="fas fa-circle text-info"></i> 소모칼로리
+                                        <br>
+                                        {{actsum}}
                                         </span>
                                     </div>
                                 </div>
@@ -325,7 +329,7 @@
                             
                                         <div id="header" class="clearfix">
                                             <div class="one">
-                                           <div class="pre-button" ><</div>
+                                            <div class="pre-button" ><</div>
                                             <div class="head-info">
                                                 <div class="head-day"></div>
                                                 <div class="head-month"></div>

@@ -279,7 +279,7 @@ def lunch(request):
                     img=img
                 )
                 obj.save()
-            return redirect('/main/lunch')
+            return redirect('/main/')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=2,dt=request.session['date'])
     i=0
     while i<len(getFood):
@@ -315,7 +315,7 @@ def dinner(request):
                     img=img
                 )
                 obj.save()
-            return redirect('/main/dinner')
+            return redirect('/main/')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=3,dt=request.session['date'])
     i=0
     while i<len(getFood):
@@ -337,7 +337,7 @@ def morning(request):
             try:
                 img=request.FILES["image_field"]
             except:
-                return redirect('/main/morning')
+                return redirect('/main/')
             if(FoodImage.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date']).exists()):
                 obj=FoodImage.objects.get(id=request.session['id'],meal_type=1,dt=request.session['date'])
                 obj.img=img
@@ -350,7 +350,7 @@ def morning(request):
                     img=img
                 )
                 obj.save()
-            return redirect('/main/morning')
+            return redirect('/main/')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=1,dt=request.session['date'])
     i=0
     while i<len(getFood):
@@ -386,7 +386,7 @@ def snack(request):
                     img=img
                 )
                 obj.save()
-            return redirect('/main/snack')
+            return redirect('/main/')
     getFood=UserFood.objects.filter(id=request.session['id'],meal_type=4,dt=request.session['date'])
     i=0
     while i<len(getFood):

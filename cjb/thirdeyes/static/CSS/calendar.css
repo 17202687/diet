@@ -60,7 +60,13 @@ table {
  */
 .clearfix {
     *zoom: 1;
+    width: 100%;
 }
+.one{
+    display: inline-block;
+    width: 50%;
+}
+
 a, a:hover {
     text-decoration: none;
 }
@@ -80,7 +86,8 @@ body{
 .elegant-calencar {
     /*width: 25em; */
     width: 100%;
-    height: 31em;
+    /*height: 31em; */
+    height: 100%;
     border: 1px solid #c9c9c9;
     -webkit-box-shadow: 0 0 5px #c9c9c9;
     box-shadow: 0 0 5px #c9c9c9;
@@ -91,7 +98,8 @@ body{
 
 #header {
     font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    height: 14em;
+    /* height: 14em; */
+    height: 40%;;
     background-color: #2a3246;
     margin-bottom: 1em;
 }
@@ -102,7 +110,7 @@ body{
     -webkit-transition: -webkit-transform 0.5s;
     transition: transform 0.5s;
     cursor: pointer;
-    width: 1em;
+    /*width: 0.5em;*/
     height: 1em;
     line-height: 1em;
     color: #e66b6b;
@@ -123,17 +131,17 @@ body{
 
 .pre-button {
     float: left;
-    margin-left: 0.5em;
+    /*margin-left: 0.5em;*/
 }
 
 .next-button {
-    float: right;
-    margin-right: 0.5em;
+    float: left;
+    /*margin-right: 0.5em;*/
 }
 
 .head-info {
     float: left;
-    width: 16em;
+    /*width: 14em;*/
 }
 
 .head-day {
@@ -151,7 +159,7 @@ body{
 }
 
 #calendar {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -234,3 +242,4 @@ tbody td:active {
     -ms-transform: scale(0.8);
     transform: scale(0.8);     
 }
+

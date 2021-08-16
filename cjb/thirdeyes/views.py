@@ -30,7 +30,6 @@ def login(request):
         inputPw=data['pw']
         hashed_pw=bcrypt.hashpw(inputPw.encode('utf-8'),bcrypt.gensalt())
         encoded_pw=hashed_pw.decode('utf-8')
-        print(encoded_pw)
         if UserTb.objects.filter(email=data['email']).exists():
             getUser=UserTb.objects.get(email=inputId)
             #if(getUser.pw == inputPw):
@@ -45,7 +44,6 @@ def login(request):
                 dt2=str(dt.year)+"-"+str(dt.month)+"-"+str(dt.day)
                 request.session['date']=dt2
                 request.session['id']=data['email']
-                print(request.session['id'])
                 return redirect('main/')
             else:
                 #비밀번호가 다름
@@ -212,7 +210,6 @@ def forgotpassword(request):
 
 def user(request):
     requestId=request.session['id']
-    print(requestId)
     if UserInfo.objects.filter(user_id=requestId).exists():
         getUser=UserInfo.objects.get(user_id=requestId)
         value={
@@ -601,7 +598,6 @@ def activity(request):
     getAct=UserActivity.objects.filter(id=request.session['id'],dt=request.session['date'])
     sumkcal=0
     for act in getAct:
-        print(act)
         sumkcal+=act.act_kcal
     if request.method=="POST":
         data=request.POST
@@ -617,7 +613,6 @@ def activity(request):
         getAct=UserActivity.objects.filter(id=request.session['id'],dt=request.session['date'])
         sumkcal=0
         for act in getAct:
-            print(act)
             sumkcal+=act.act_kcal
         return render(request, 'thirdeyes/activity.html',{'kcal':kcal, 'sumkcal':sumkcal})
 
@@ -635,7 +630,6 @@ def activityedit(request):
                 break
             tmpTime=data.getlist('act_time')[i]
             tmpMet=data.getlist('act_met')[i]
-            print(tmpName, tmpTime, tmpMet)
             UserActivity.objects.create(
                 id=request.session['id'],
                 dt=request.session['date'],

@@ -238,7 +238,7 @@ def user(request):
             getUser.weight=data['weight']
             getUser.activity=data['activity']
             getUser.save()
-            return redirect('main')
+            return redirect('/main/')
         else:
             UserInfo.objects.create(
                 user_id=requestId,
@@ -248,7 +248,7 @@ def user(request):
                 weight=data['weight'],
                 activity=data['activity']
             )
-            return redirect('main')
+            return redirect('/main/')
     else:
         form=LoginForm()
     return render(request, 'thirdeyes/user.html',{'forms':form, 'context':value})
